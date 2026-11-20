@@ -5,6 +5,7 @@ Laman undian bertema langit malam untuk **Majlis Makan Malam Tahunan SMK Bandar 
 ## Ciri utama
 
 - Animasi bintang berkelip, bintang jatuh, bulan sabit, ilustrasi bantal/selimut dan poster rasmi.
+- **Roda Impian interaktif**: cari dan pilih nama calon, putarkan roda bertema malam berbintang, kemudian tekan **Berikan Bintang** untuk memasukkan pilihan. Roda ialah animasi pilihan pengundi, bukan cabutan rawak; semua calon masih boleh dipilih.
 - Pengundi hanya perlu memasukkan **nombor kad pengenalan 12 digit**; pengesahan dibuat menggunakan senarai guru dan AKP pada pelayan.
 - Setiap pengundi memilih **tepat 3 calon berbeza**, dan **hanya satu penghantaran undi** dibenarkan.
 - Papan keputusan **hanya untuk pentadbir** dan menunjukkan 7 calon perempuan serta 3 calon lelaki teratas.
@@ -69,6 +70,14 @@ Sekiranya undian seri pada tempat ketujuh atau ketiga, paparan disusun mengikut 
 - Jangan kongsi database Google Sheets secara umum. Hanya urus setia yang dipercayai patut mempunyai akses.
 - Pastikan kata laluan admin kuat dan tidak terdedah dalam kod awam.
 - Periksa bahawa pengundi biasa tidak dapat mengakses keputusan admin.
+
+## Cara pengundi menggunakan Roda Impian
+
+1. Masukkan nombor kad pengenalan 12 digit untuk mengakses undian.
+2. Gunakan kategori **Semua / Perempuan / Lelaki** dan kotak carian untuk mencari calon, kemudian pilih nama daripada senarai.
+3. Tekan **Putarkan Roda!** dan tunggu sehingga roda berhenti pada nama yang dipilih.
+4. Tekan **Berikan Bintang**. Ulang untuk **tiga calon berbeza**; pilihan boleh dibuang sebelum dihantar.
+5. Tekan **Sahkan 3 Pilihan** dan sahkan penghantaran terakhir. Roda memaparkan sehingga lapan calon pada satu masa untuk memastikan nama boleh dibaca, tetapi menu pilihan merangkumi semua calon aktif.
 
 ## Struktur repo
 

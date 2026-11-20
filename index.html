@@ -65,6 +65,36 @@
     @media(max-width:950px){.hero{grid-template-columns:1fr .75fr}.hero h1{font-size:clamp(46px,7vw,70px)}.hero-art{height:430px}.moon{width:148px;height:148px}.moon:after{width:133px;height:133px;left:37px}.nominees{grid-template-columns:repeat(2,minmax(0,1fr))}}
     @media(max-width:720px){.shell{padding:0 18px 45px}.light-string{height:29px}header{padding:9px 0}.brand-mark{height:42px;width:42px}.brand b{font-size:11px}.brand small{font-size:9px}.soft-link{padding:9px 11px;font-size:11px}.hero{display:flex;flex-direction:column;align-items:stretch;text-align:center;padding:38px 0 8px;min-height:0;gap:0}.hero h1{font-size:clamp(49px,12vw,76px);margin:12px 0}.hero p{font-size:15px;margin:0 auto 23px}.eyebrow{justify-content:center;font-size:10px}.script-note{font-size:26px}.date-detail{justify-content:center;margin-top:18px}.hero-art{height:300px;max-width:450px;width:100%;margin:-7px auto 15px}.halo{width:275px;height:275px;left:18%}.moon{width:118px;height:118px;right:13%;top:0}.moon:after{width:108px;height:108px;left:31px;top:-9px}.big-star.a{top:25px}.big-star.b{top:105px}.big-star.c{top:94px}.art-cloud.a{left:5%;bottom:63px;transform:scale(.65)}.art-cloud.b{right:2%;bottom:51px;transform:scale(.6)}.blanket{height:85px;bottom:4px}.pillow{bottom:60px;width:93px;height:71px}.pillow.b{bottom:65px}.pillow.star{width:72px;height:63px;bottom:75px}.pillow.star:after{top:11px;font-size:15px}.hanging{height:59px}.hanging:after{font-size:28px;left:-12px;bottom:-15px}.section-title{margin-top:2px}.section-title h2{font-size:32px}.login-card{padding:26px 22px}.voting-panel{padding:20px 15px}.voting-top h3{font-size:23px}.nominees{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;max-height:440px}.nominee{padding:14px 10px;min-height:113px;gap:8px}.nominee-avatar{width:38px;height:38px;font-size:21px}.nominee-name{font-size:11px}.nominee-category{font-size:10px}.filters{gap:7px}.chip{font-size:12px;padding:8px 10px}.search{width:100%;max-width:none;flex-basis:100%;margin:2px 0 0}.selection-bar{padding:12px 10px;gap:7px}.selection-label{font-size:11px}.selection-label b{font-size:13px}.pick-slot{height:41px;width:41px}.action-row{align-items:stretch;flex-direction:column;gap:12px}.action-row .cta{width:100%}.results-columns{grid-template-columns:1fr}.admin-stats{gap:6px}.stat{padding:11px}.stat strong{font-size:24px}.stat span{font-size:10px}.modal-card{padding:25px 18px}.admin-heading{flex-direction:column;align-items:flex-start}}
     @media(max-width:380px){.nominees{grid-template-columns:1fr}.nominee{min-height:75px}.nominee-name{font-size:13px}.brand small{letter-spacing:0}.header-actions{gap:5px}}
+    /* The Roda Impian game-show stage */
+    .wheel-showcase{display:grid;grid-template-columns:minmax(0,1.13fr) minmax(0,.87fr);gap:24px;align-items:stretch;margin-top:20px}
+    .wheel-arcade{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid #e6b96f60;border-radius:27px;background:radial-gradient(ellipse at 50% 42%,#4942798a 0,#1b2051 57%,#0b1336 100%);padding:18px 12px 12px;box-shadow:inset 0 0 60px #0409298c,0 13px 40px #02082052;position:relative;overflow:hidden}
+    .wheel-arcade:before,.wheel-arcade:after{content:'✦';position:absolute;color:#f6d380;font-size:24px;opacity:.65;animation:twinkle 3s ease-in-out infinite alternate}.wheel-arcade:before{left:8%;top:23%}.wheel-arcade:after{right:9%;bottom:20%;animation-delay:1s}
+    .wheel-marquee{font:800 clamp(15px,2.2vw,24px)/1.2 'Fraunces',serif;color:#fff2ba;letter-spacing:.14em;text-shadow:0 2px 8px #0009,0 0 20px #ffdc88bb;margin:4px 0 15px;text-align:center}.wheel-marquee span{font-size:15px;color:#f0ba5d;margin:0 5px}
+    .wheel-frame{width:100%;max-width:455px;aspect-ratio:1;display:grid;place-items:center;position:relative;z-index:1}
+    .wheel-frame:before{content:'';position:absolute;inset:1.2%;border-radius:50%;background:repeating-conic-gradient(from 0deg,#fff2bc 0deg 3.2deg,#a7662a 3.2deg 6.2deg,#52315c 6.2deg 12deg);box-shadow:0 0 0 5px #b98447,0 0 0 9px #e6c47d,0 0 23px 9px #fbca787a,0 10px 34px #000a;animation:marquee-glint 9s linear infinite}
+    .wheel-face{position:absolute;inset:5.4%;border-radius:50%;background:#121940;box-shadow:inset 0 0 18px #000b,0 0 0 3px #5e326b;isolation:isolate}
+    .wheel-disc{position:absolute;inset:0;border-radius:50%;overflow:hidden;transform:rotate(0deg);transition:transform 5.2s cubic-bezier(.13,.79,.13,1);will-change:transform}
+    .wheel-disc canvas{display:block;width:100%;height:100%;border-radius:50%}
+    .wheel-hub{position:absolute;z-index:3;top:50%;left:50%;width:18%;aspect-ratio:1;transform:translate(-50%,-50%);display:grid;place-items:center;border-radius:50%;background:radial-gradient(circle at 30% 20%,#fff7cf,#e8b959 55%,#a56a2d);border:5px solid #fff0b5;color:#4b2758;font-size:clamp(24px,4vw,43px);text-shadow:0 1px #fff9;box-shadow:0 4px 20px #0009,0 0 18px #ffd779aa}
+    .wheel-pointer{position:absolute;z-index:5;left:50%;top:-5%;width:12%;height:18%;transform:translateX(-50%);filter:drop-shadow(0 4px 4px #000a)}
+    .wheel-pointer:before{content:'';position:absolute;inset:0;background:linear-gradient(115deg,#fff5c6,#d3932a 75%);clip-path:polygon(0 0,100% 0,50% 100%);border-radius:5px}
+    .wheel-pointer:after{content:'★';position:absolute;top:-8%;left:50%;transform:translateX(-50%);font-size:clamp(15px,2vw,25px);color:#fff4cb;text-shadow:0 2px 6px #7c3c19}
+    .wheel-frame.spinning .wheel-pointer{animation:pointer-tick .16s ease-in-out infinite alternate}.wheel-frame.spinning:before{box-shadow:0 0 0 5px #b98447,0 0 0 9px #ffe4a0,0 0 30px 15px #fbca7899,0 10px 34px #000a}
+    @keyframes pointer-tick{to{transform:translateX(-50%) rotate(7deg)}}
+    .wheel-footnote{text-align:center;font-size:12px;color:#f8da99;margin:18px 0 2px;font-weight:700;letter-spacing:.03em}
+    .wheel-controls{display:flex;flex-direction:column;gap:11px;min-width:0;padding:14px 1px 6px}.wheel-eyebrow{color:#e9c879;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:800}
+    .wheel-controls h4{margin:-1px 0 0;font:700 clamp(25px,3vw,34px)/1.08 'Fraunces',serif;letter-spacing:-.025em}.wheel-controls h4 em{font-weight:500;color:#f6d386}.wheel-intro{margin:0 0 4px;color:#c4cce9;line-height:1.65;font-size:13px}
+    .wheel-controls .filters{margin:5px 0 1px;gap:6px}.wheel-controls .chip{font-size:12px;padding:9px 11px}
+    .wheel-field-label{display:block;color:#e9def7;font-size:12px;font-weight:800;margin:2px 0 -5px}.wheel-controls .search{max-width:none;width:100%;min-width:0;margin:0;padding:12px 13px;font-size:14px}
+    .wheel-select{cursor:pointer;font-size:13px;min-height:45px;padding:11px 12px;color:#fff;appearance:auto}.wheel-select option{background:#141a47;color:#fff}
+    .spin-button{width:100%;margin:7px 0 0;min-height:55px;font-weight:900!important;letter-spacing:.08em;box-shadow:0 8px 26px #f5c46c33;transition:transform .2s,box-shadow .2s}.spin-button:not(:disabled):hover{transform:translateY(-3px);box-shadow:0 11px 32px #ffd77573}.spin-button:not(:disabled):active{transform:translateY(1px)}
+    .wheel-status{min-height:47px;border-radius:12px;padding:10px 12px;background:#0b143c;border:1px solid #a9a6d44b;color:#d9d5fc;font-size:12px;line-height:1.5;text-align:center;display:flex;align-items:center;justify-content:center}.wheel-status.winner{color:#fff0b5;border-color:#f4c76d;box-shadow:inset 0 0 18px #ddab4b19}
+    .choose-button{width:100%;min-height:43px;border-color:#e5c87d;color:#fff0bd;font-size:14px}.choose-button:disabled{opacity:.45;cursor:not-allowed}
+    .chosen-list{margin-top:auto;padding-top:13px;border-top:1px solid #ded2ef24}.chosen-list .wheel-field-label{color:#f6d78a;margin:0 0 9px}.chosen-picks{display:grid;gap:7px}.chosen-empty{font-size:12px;color:#b1b9d9;font-style:italic;padding:6px 0}.chosen-pick{display:flex;align-items:center;gap:9px;justify-content:space-between;padding:10px 11px;background:#302c64;border:1px solid #e7c47b6a;border-radius:12px;font-size:12px;font-weight:750}.chosen-pick span{min-width:0;line-height:1.4}.chosen-pick button{flex-shrink:0;color:#fce4ae;background:#12183b;border:1px solid #b5a4cc66;border-radius:50%;width:25px;height:25px;display:grid;place-items:center;font-size:15px}.chosen-pick button:hover{background:#734760}
+    .wheel-showcase [hidden]{display:none!important}
+    @keyframes twinkle{to{opacity:1;transform:scale(1.3)}}@keyframes marquee-glint{to{filter:hue-rotate(10deg)}}
+    @media(max-width:780px){.wheel-showcase{grid-template-columns:1fr;gap:18px}.wheel-arcade{padding:15px 12px 13px}.wheel-frame{max-width:390px}.wheel-controls{padding:10px 4px 5px}.wheel-controls h4{font-size:29px}.wheel-controls .filters{gap:8px}.wheel-footnote{font-size:11px}}
+    @media(max-width:430px){.wheel-marquee{font-size:17px;letter-spacing:.09em}.wheel-frame{max-width:340px}.wheel-arcade{padding:14px 11px 10px}.wheel-pointer{top:-4%;width:13%}.wheel-controls .chip{padding:8px 9px;font-size:11px}.wheel-controls h4{font-size:26px}.wheel-hub{border-width:3px}.wheel-footnote{margin-top:13px}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.001ms!important;transition:none!important;scroll-behavior:auto!important}}
   </style>
 </head>
@@ -112,14 +142,38 @@
         <div id="vote-stage" class="glass voting-panel" hidden>
           <div class="voting-top"><div><h3>Siapa bintang pilihan anda?</h3><p id="welcome-name"></p></div><span class="pill">★ 3 UNDI SAHAJA</span></div>
           <div class="selection-bar" aria-live="polite"><div class="selection-label"><b id="selection-count">0 daripada 3</b>Bintang dipilih</div><div id="slot-1" class="pick-slot" aria-label="Bintang pertama">☆</div><div id="slot-2" class="pick-slot" aria-label="Bintang kedua">☆</div><div id="slot-3" class="pick-slot" aria-label="Bintang ketiga">☆</div></div>
-          <div class="filters" role="group" aria-label="Tapis calon">
-            <button class="chip filter" data-filter="all" aria-pressed="true" type="button">Semua</button>
-            <button class="chip filter" data-filter="P" aria-pressed="false" type="button">✿ Perempuan</button>
-            <button class="chip filter" data-filter="L" aria-pressed="false" type="button">✦ Lelaki</button>
-            <input id="search" class="field search" type="search" placeholder="Cari nama calon..." aria-label="Cari nama calon">
+          <div class="wheel-showcase">
+            <div class="wheel-arcade">
+              <div class="wheel-marquee"><span>✦</span> RODA IMPIAN <span>✦</span></div>
+              <div class="wheel-frame">
+                <div class="wheel-face" aria-label="Roda impian calon bintang malam">
+                  <div id="wheel-disc" class="wheel-disc"><canvas id="vote-wheel" width="700" height="700" role="img" aria-label="Roda nama calon undian"></canvas></div>
+                  <div class="wheel-hub" aria-hidden="true">★</div>
+                  <div class="wheel-pointer" aria-hidden="true"></div>
+                </div>
+              </div>
+              <p class="wheel-footnote">✧ Pilih nama → putar roda → beri bintang ✧</p>
+            </div>
+            <div class="wheel-controls">
+              <span class="wheel-eyebrow">✧ Giliran anda memilih</span>
+              <h4>Putarkan <em>takdir bintang!</em></h4>
+              <p class="wheel-intro">Cari calon kegemaran anda, kemudian putarkan roda hingga namanya muncul di penunjuk emas.</p>
+              <div class="filters" role="group" aria-label="Tapis calon">
+                <button class="chip filter" data-filter="all" aria-pressed="true" type="button">Semua</button>
+                <button class="chip filter" data-filter="P" aria-pressed="false" type="button">✿ Perempuan</button>
+                <button class="chip filter" data-filter="L" aria-pressed="false" type="button">✦ Lelaki</button>
+              </div>
+              <label class="wheel-field-label" for="search">Cari nama calon</label>
+              <input id="search" class="field search" type="search" placeholder="Taip nama guru atau AKP..." autocomplete="off">
+              <label class="wheel-field-label" for="candidate-select">Nama pilihan anda</label>
+              <select id="candidate-select" class="field wheel-select"><option value="">— Pilih calon dahulu —</option></select>
+              <button id="spin-wheel" type="button" class="cta spin-button" disabled><span aria-hidden="true">✦</span> PUTARKAN RODA!</button>
+              <div id="wheel-status" class="wheel-status" role="status" aria-live="polite">Pilih nama calon untuk memulakan putaran.</div>
+              <button id="choose-wheel" type="button" class="secondary-button choose-button" disabled>★ Berikan Bintang</button>
+              <div class="chosen-list"><span class="wheel-field-label">Bintang yang sudah dipilih</span><div id="selected-picks" class="chosen-picks"><span class="chosen-empty">Belum ada pilihan. Tiga bintang menanti anda!</span></div></div>
+            </div>
           </div>
-          <div id="nominees" class="nominees" aria-label="Senarai calon"></div>
-          <div class="action-row"><small id="selection-hint">Sentuh kad calon untuk memberikan bintang.</small><button id="submit-vote" type="button" class="cta" disabled>★ Sahkan 3 Pilihan</button></div>
+          <div class="action-row"><small id="selection-hint">Putarkan roda untuk tiga calon pilihan anda.</small><button id="submit-vote" type="button" class="cta" disabled>★ Sahkan 3 Pilihan</button></div>
           <div id="vote-error" class="message" role="alert" hidden></div>
         </div>
         <div id="success-stage" class="glass success-view" hidden>
@@ -192,7 +246,7 @@
       document.body.append(frame);
     });
     const $ = id => document.getElementById(id);
-    const state = { candidates:[],selection:[],filter:'all',query:'',voterToken:null,adminToken:null,config:{maxVotes:3,femaleWinners:7,maleWinners:3,open:true},pending:false };
+    const state = { candidates:[],selection:[],filter:'all',query:'',targetId:'',wheelEntries:[],wheelRotation:0,wheelSpinning:false,wheelWinner:null,voterToken:null,adminToken:null,config:{maxVotes:3,femaleWinners:7,maleWinners:3,open:true},pending:false };
     const escapeHtml = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     function server(fn,...args){
       return bridgeReady.then(()=>new Promise((resolve,reject)=>{
@@ -210,26 +264,141 @@
     document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id)}));
     document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal:not([hidden])').forEach(m=>closeModal(m.id))});
     ['poster-top','poster-bottom'].forEach(id=>$(id).addEventListener('click',()=>showModal('poster-modal')));
+    function wheelPool(){
+      return state.candidates.filter(c=>!state.selection.includes(c.id)&&(state.filter==='all'||c.gender===state.filter));
+    }
+    function drawWheel(){
+      const canvas=$('vote-wheel'),ctx=canvas.getContext('2d');
+      if(!ctx)return;
+      const size=canvas.width,center=size/2,radius=center-13,entries=state.wheelEntries;
+      ctx.clearRect(0,0,size,size);
+      if(!entries.length){
+        ctx.fillStyle='#252856';ctx.beginPath();ctx.arc(center,center,radius,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle='#f3d68d';ctx.font='bold 26px Fraunces, serif';ctx.textAlign='center';ctx.fillText('✦ Pilih calon ✦',center,center-80);return;
+      }
+      const palette=['#674488','#37518b','#985579','#7255a2','#9d5e66','#365d82','#a06b8b','#55529a'];
+      const step=Math.PI*2/entries.length;
+      entries.forEach((c,i)=>{
+        const angle=-Math.PI/2+i*step,start=angle-step/2,end=angle+step/2;
+        const grad=ctx.createRadialGradient(center,center,36,center,center,radius);
+        grad.addColorStop(0,'#1a1b49');grad.addColorStop(.33,palette[i%palette.length]);grad.addColorStop(1,palette[i%palette.length]);
+        ctx.beginPath();ctx.moveTo(center,center);ctx.arc(center,center,radius,start,end);ctx.closePath();
+        ctx.fillStyle=grad;ctx.fill();ctx.lineWidth=5;ctx.strokeStyle='#f5d38d';ctx.stroke();
+        ctx.save();ctx.translate(center,center);ctx.rotate(angle);ctx.translate(radius*.66,0);
+        if(Math.cos(angle)<0)ctx.rotate(Math.PI);
+        const shortName=c.name.trim().split(/\s+/).slice(0,3).join(' ');
+        ctx.fillStyle='#fff9e7';ctx.textAlign='center';ctx.textBaseline='middle';
+        ctx.shadowColor='#080925';ctx.shadowBlur=5;
+        ctx.font='bold 24px Arial, sans-serif';ctx.fillText(shortName,0,-13,235);
+        ctx.shadowBlur=0;ctx.font='24px Arial, sans-serif';ctx.fillStyle='#ffdf8c';ctx.fillText(c.gender==='P'?'✿':'✦',0,25);
+        ctx.restore();
+      });
+      ctx.beginPath();ctx.arc(center,center,radius-7,0,Math.PI*2);ctx.lineWidth=7;ctx.strokeStyle='#ffe3a0';ctx.stroke();
+      ctx.beginPath();ctx.arc(center,center,radius*.20,0,Math.PI*2);ctx.lineWidth=8;ctx.strokeStyle='#ffe0a3';ctx.stroke();
+      for(let i=0;i<32;i++){
+        const angle=i*Math.PI/16;
+        ctx.beginPath();ctx.arc(center+Math.cos(angle)*(radius-2),center+Math.sin(angle)*(radius-2),5,0,Math.PI*2);
+        ctx.fillStyle=i%2?'#fff0b8':'#ffd06b';ctx.fill();
+      }
+    }
     function renderCandidates(){
-      const el=$('nominees');el.textContent='';
-      const data=state.candidates.filter(c=>(state.filter==='all'||c.gender===state.filter)&&c.name.toLocaleLowerCase('ms').includes(state.query));
-      if(!data.length){const empty=document.createElement('p');empty.className='no-results';empty.textContent='Tiada calon ditemui. Cuba carian lain.';el.append(empty)}
-      data.forEach(c=>{
-        const selected=state.selection.includes(c.id);
-        const button=document.createElement('button');button.type='button';
-        button.className='nominee '+(c.gender==='L'?'male ':'')+(selected?'selected':'');button.setAttribute('aria-pressed',String(selected));
-        button.setAttribute('aria-label',(selected?'Buang pilihan ':'Pilih ')+c.name);
-        button.innerHTML='<span class="nominee-avatar" aria-hidden="true">'+(c.gender==='P'?'✿':'✦')+'</span><span><span class="nominee-name">'+escapeHtml(c.name)+'</span><span class="nominee-category">'+(c.gender==='P'?'Bintang Perempuan':'Bintang Lelaki')+'</span></span>'+(selected?'<span class="nominee-check" aria-hidden="true">★</span>':'');
-        button.addEventListener('click',()=>pick(c.id));el.append(button)
+      const chosen=$('selected-picks');chosen.textContent='';
+      if(!state.selection.length){
+        const empty=document.createElement('span');empty.className='chosen-empty';empty.textContent='Belum ada pilihan. Tiga bintang menanti anda!';chosen.append(empty);
+      }
+      state.selection.forEach((id,i)=>{
+        const c=state.candidates.find(x=>x.id===id);
+        if(!c)return;
+        const item=document.createElement('div');item.className='chosen-pick';
+        const name=document.createElement('span');name.textContent=(i+1)+'. ★ '+c.name;
+        const remove=document.createElement('button');remove.type='button';remove.textContent='×';remove.setAttribute('aria-label','Buang pilihan '+c.name);
+        remove.disabled=state.wheelSpinning||state.pending;remove.addEventListener('click',()=>pick(id));item.append(name,remove);chosen.append(item);
       });
       $('selection-count').textContent=state.selection.length+' daripada '+state.config.maxVotes;
       for(let i=1;i<=3;i++){const slot=$('slot-'+i);slot.textContent=i<=state.selection.length?'★':'☆';slot.classList.toggle('filled',i<=state.selection.length)}
-      $('submit-vote').disabled=state.selection.length!==state.config.maxVotes;
-      $('selection-hint').textContent=state.selection.length===3?'Pilihan lengkap! Sahkan undian anda.':'Sentuh kad calon untuk memberikan bintang.';
+      const atLimit=state.selection.length===state.config.maxVotes;
+      $('submit-vote').disabled=!atLimit||state.wheelSpinning||state.pending;
+      $('selection-hint').textContent=atLimit?'Ketiga-tiga bintang sudah dipilih. Sahkan undian anda.':'Putarkan roda untuk '+(state.config.maxVotes-state.selection.length)+' lagi calon pilihan anda.';
+      const pool=wheelPool();
+      const matching=pool.filter(c=>c.name.toLocaleLowerCase('ms').includes(state.query));
+      const select=$('candidate-select');select.textContent='';
+      const placeholder=document.createElement('option');placeholder.value='';placeholder.textContent=matching.length?'— Pilih calon dahulu —':'— Tiada calon ditemui —';select.append(placeholder);
+      matching.forEach(c=>{const option=document.createElement('option');option.value=c.id;option.textContent=c.name+' · '+(c.gender==='P'?'Perempuan':'Lelaki');select.append(option)});
+      if(!matching.some(c=>c.id===state.targetId))state.targetId='';
+      select.value=state.targetId;
+      const focusIndex=Math.max(0,pool.findIndex(c=>c.id===state.targetId));
+      const start=Math.max(0,Math.min(pool.length-8,focusIndex-3));
+      state.wheelEntries=pool.slice(start,start+8);
+      drawWheel();
+      select.disabled=atLimit||state.wheelSpinning;
+      $('search').disabled=atLimit||state.wheelSpinning;
+      document.querySelectorAll('.filter').forEach(b=>b.disabled=atLimit||state.wheelSpinning);
+      $('spin-wheel').disabled=!state.targetId||atLimit||state.wheelSpinning;
+      $('choose-wheel').disabled=!state.wheelWinner||atLimit||state.wheelSpinning;
+      const status=$('wheel-status');status.classList.toggle('winner',Boolean(state.wheelWinner));
+      if(atLimit)status.textContent='🌟 Tiga bintang sudah lengkap! Tekan “Sahkan 3 Pilihan” untuk menghantar undian.';
+      else if(state.wheelWinner)status.textContent='★ Roda berhenti pada '+state.wheelWinner.name+'! Tekan “Berikan Bintang”.';
+      else if(!matching.length)status.textContent='Tiada calon ditemui. Cuba nama atau kategori lain.';
+      else if(state.targetId)status.textContent='Bersedia! Tekan “Putarkan Roda” untuk '+matching.find(c=>c.id===state.targetId).name+'.';
+      else status.textContent='Pilih nama calon untuk memulakan putaran.';
     }
-    function pick(id){if(state.pending)return;const index=state.selection.indexOf(id);if(index>=0)state.selection.splice(index,1);else if(state.selection.length<state.config.maxVotes)state.selection.push(id);else{error('vote-error','Anda hanya boleh memilih tiga orang calon. Buang satu pilihan dahulu.');return}error('vote-error','');renderCandidates()}
-    document.querySelectorAll('.filter').forEach(b=>b.addEventListener('click',()=>{state.filter=b.dataset.filter;document.querySelectorAll('.filter').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));renderCandidates()}));
-    $('search').addEventListener('input',e=>{state.query=e.target.value.toLocaleLowerCase('ms').trim();renderCandidates()});
+    function pick(id){
+      if(state.pending||state.wheelSpinning)return;
+      const index=state.selection.indexOf(id);
+      if(index>=0)state.selection.splice(index,1);
+      else if(state.selection.length<state.config.maxVotes)state.selection.push(id);
+      else{error('vote-error','Anda hanya boleh memilih tiga orang calon. Buang satu pilihan dahulu.');return}
+      state.targetId='';state.wheelWinner=null;error('vote-error','');renderCandidates();
+    }
+    document.querySelectorAll('.filter').forEach(b=>b.addEventListener('click',()=>{
+      if(state.wheelSpinning)return;
+      state.filter=b.dataset.filter;state.wheelWinner=null;
+      document.querySelectorAll('.filter').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+      renderCandidates();
+    }));
+    $('search').addEventListener('input',e=>{
+      if(state.wheelSpinning)return;
+      state.query=e.target.value.toLocaleLowerCase('ms').trim();state.wheelWinner=null;renderCandidates();
+    });
+    $('candidate-select').addEventListener('change',e=>{
+      if(state.wheelSpinning)return;
+      state.targetId=e.target.value;state.wheelWinner=null;renderCandidates();
+    });
+    $('spin-wheel').addEventListener('click',()=>{
+      if(!state.targetId||state.wheelSpinning||state.pending||state.selection.length>=state.config.maxVotes)return;
+      const target=state.candidates.find(c=>c.id===state.targetId);
+      const index=state.wheelEntries.findIndex(c=>c.id===state.targetId);
+      if(!target||index<0)return;
+      state.wheelSpinning=true;state.wheelWinner=null;
+      $('spin-wheel').disabled=true;$('choose-wheel').disabled=true;$('candidate-select').disabled=true;$('search').disabled=true;
+      document.querySelectorAll('.filter').forEach(b=>b.disabled=true);
+      document.querySelectorAll('.chosen-pick button').forEach(b=>b.disabled=true);
+      $('submit-vote').disabled=true;
+      $('wheel-status').classList.remove('winner');$('wheel-status').textContent='✦ Roda sedang berputar... siapakah bintang anda?';
+      $('wheel-frame').classList.add('spinning');
+      const step=360/state.wheelEntries.length;
+      const desired=((360-index*step)%360+360)%360;
+      const current=((state.wheelRotation%360)+360)%360;
+      const delta=(desired-current+360)%360;
+      state.wheelRotation+=(5+Math.floor(Math.random()*3))*360+delta;
+      $('wheel-disc').style.transform='rotate('+state.wheelRotation+'deg)';
+      const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.setTimeout(()=>{
+        state.wheelSpinning=false;state.wheelWinner=target;
+        $('wheel-frame').classList.remove('spinning');
+        $('candidate-select').disabled=false;$('search').disabled=false;
+        document.querySelectorAll('.filter').forEach(b=>b.disabled=false);
+        document.querySelectorAll('.chosen-pick button').forEach(b=>b.disabled=false);
+        $('spin-wheel').disabled=false;$('choose-wheel').disabled=false;
+        $('wheel-status').classList.add('winner');
+        $('wheel-status').textContent='★ Tahniah! Roda berhenti pada '+target.name+'. Tekan “Berikan Bintang” untuk memilihnya.';
+      },reduced?30:5400);
+    });
+    $('choose-wheel').addEventListener('click',()=>{
+      if(!state.wheelWinner||state.wheelSpinning)return;
+      const id=state.wheelWinner.id;
+      pick(id);
+    });
     $('login-form').addEventListener('submit',async e=>{
       e.preventDefault();if(state.pending)return;
       const ic=$('ic').value.replace(/\D/g,'');

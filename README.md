@@ -5,7 +5,7 @@ Laman undian bertema langit malam untuk **Majlis Makan Malam Tahunan SMK Bandar 
 ## Ciri utama
 
 - Animasi bintang berkelip, bintang jatuh, bulan sabit, ilustrasi bantal/selimut dan poster rasmi.
-- Pengundi disahkan melalui **12 digit KP + 4 digit terakhir nombor telefon** daripada senarai guru dan AKP di sisi pelayan sahaja.
+- Pengundi hanya perlu memasukkan **nombor kad pengenalan 12 digit**; pengesahan dibuat menggunakan senarai guru dan AKP pada pelayan.
 - Setiap pengundi memilih **tepat 3 calon berbeza**, dan **hanya satu penghantaran undi** dibenarkan.
 - Papan keputusan **hanya untuk pentadbir** dan menunjukkan 7 calon perempuan serta 3 calon lelaki teratas.
 - Pentadbir boleh buka atau tutup undian; undian dikunci secara transaksi supaya tidak berganda.
@@ -26,7 +26,7 @@ Lajur sumber Sheet1: BIL, NAMA, NOKP, JAWATAN, NO TELEFON. Semakan awal: **69 ba
 
 **Seluruh UI berada di GitHub Pages.** Calon, animasi, pengesahan pengundi, tiga pilihan, paparan selesai dan leaderboard admin semuanya beroperasi pada halaman [https://kea3123-bit.github.io/pyjamasparty/](https://kea3123-bit.github.io/pyjamasparty/).
 
-Google Apps Script hanyalah **backend sambungan Google Sheets**. Ia menyediakan fail Bridge.html (komponen kecil tanpa UI) dan Code.gs (fungsi server). GitHub Pages berkomunikasi dengan Bridge.html dalam iframe tersembunyi melalui mesej yang disahkan menggunakan origin GitHub dan token saluran rawak. Google Apps Script menggunakan google.script.run untuk membaca/menulis ke Sheets. Nombor KP/telefon tidak dimasukkan ke dalam query URL.
+Google Apps Script hanyalah **backend sambungan Google Sheets**. Ia menyediakan fail Bridge.html (komponen kecil tanpa UI) dan Code.gs (fungsi server). GitHub Pages berkomunikasi dengan Bridge.html dalam iframe tersembunyi melalui mesej yang disahkan menggunakan origin GitHub dan token saluran rawak. Google Apps Script menggunakan google.script.run untuk membaca/menulis ke Sheets. Nombor KP tidak dimasukkan ke dalam query URL.
 
 ## Aktifkan backend Apps Script
 
@@ -36,7 +36,7 @@ Google Apps Script hanyalah **backend sambungan Google Sheets**. Ia menyediakan 
 2. Gantikan kandungan fail **Code.gs** dalam editor dengan [apps-script/Code.gs](apps-script/Code.gs).
 3. Klik **+ → HTML**, namakan fail **Bridge**. Tampal kandungan [apps-script/Bridge.html](apps-script/Bridge.html). Fail Index.html yang lama tidak lagi digunakan; boleh dipadam daripada projek Apps Script jika mahu.
 4. Buka **Project Settings → Script properties → Add script property**. Namanya **ADMIN_PASSWORD**, dan nilainya ialah kata laluan pentadbir yang unik, sekurang-kurangnya 12 aksara (16+ disyorkan). **Jangan simpan kata laluan dalam GitHub, HTML atau Google Sheets.**
-5. Klik **Deploy → Manage deployments → Edit (ikon pensel)** untuk deployment URL sedia ada, pilih **New version**. Tetapan Web app: **Execute as: Me (pemilik skrip)** supaya pengundi tidak memerlukan akses terus ke Google Sheets; **Who has access** mesti membenarkan pelawat yang ingin mengundi. Cuba capaian organisasi sekolah dahulu jika semua menggunakan akaun organisasi. Jika iframe di GitHub Pages gagal memuatkan kerana log masuk Google atau sekatan cookies pihak ketiga, semak semula tetapan capaian (contohnya Anyone, jika sekolah bersetuju), sambil mengekalkan pengesahan KP+telefon pada server.
+5. Klik **Deploy → Manage deployments → Edit (ikon pensel)** untuk deployment URL sedia ada, pilih **New version**. Tetapan Web app: **Execute as: Me (pemilik skrip)** supaya pengundi tidak memerlukan akses terus ke Google Sheets; **Who has access** mesti membenarkan pelawat yang ingin mengundi. **Utamakan akses organisasi sekolah** jika semua menggunakan akaun organisasi kerana hanya nombor KP diperlukan untuk pengesahan. Jika iframe di GitHub Pages gagal memuatkan kerana log masuk Google atau sekatan cookies pihak ketiga, semak semula tetapan capaian dengan mengambil kira risiko penyamaran identiti.
 6. Klik **Deploy**, benarkan kebenaran kepada dua Google Sheets jika diminta. Pilih **Edit deployment sedia ada**, bukan cipta deployment baru, supaya URL /exec tidak berubah.
 7. Buka **GitHub Pages**, tunggu pangkalan data disambungkan. Tab CALON akan terisi automatik dengan **67 individu unik** pada panggilan data pertama. Semak nama/jantina dan status TETAPAN!B2. Anda boleh tukar kepada FALSE sehingga selesai semakan.
 8. Edarkan **hanya URL GitHub Pages** sebagai laman undian. Pengundi akan kekal di GitHub Pages ketika mengundi dan menyemak pilihan.
@@ -83,4 +83,4 @@ Antaramuka hanya perlu diubah dalam index.html pada GitHub. Backend hanya perlu 
 
 Repositori awam **tidak mengandungi** KP, nombor telefon, kata laluan atau senarai staf penuh. Nombor KP hanya dibandingkan pada server terhadap spreadsheet sumber dan tidak disalin ke Google Sheets undian.
 
-Pengesahan KP + empat digit telefon ialah kawalan asas untuk acara dalaman, **bukan pengesahan selamat setaraf SSO**. Jika perlu keselamatan lebih kuat, gunakan Workspace organisasi atau kod undian unik bagi setiap warga sekolah.
+Pengesahan menggunakan KP sahaja memudahkan undian, tetapi **sesiapa yang mengetahui nombor KP seseorang mungkin boleh mengundi bagi pihaknya**. Sangat digalakkan mengehadkan akses aplikasi kepada akaun Workspace organisasi sekolah. Alternatif yang lebih kukuh ialah kod undian unik atau SSO.

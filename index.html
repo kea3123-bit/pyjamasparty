@@ -104,11 +104,9 @@
             <label class="label" for="ic">Nombor kad pengenalan (12 digit)</label>
             <input id="ic" class="field" name="ic" inputmode="numeric" pattern="[0-9-]{12,14}" autocomplete="off" placeholder="Contoh: 900101021234" required aria-describedby="ic-help">
             <div id="ic-help" class="field-help">Nombor ini disemak pada senarai guru dan AKP sekolah.</div>
-            <label class="label" for="phone">Empat digit terakhir telefon</label>
-            <input id="phone" class="field" name="phone" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="off" placeholder="Contoh: 1234" required>
             <button type="submit" id="login-button" class="cta" disabled><span aria-hidden="true">✦</span> Teruskan ke Undian</button>
           </form>
-          <div class="privacy"><span aria-hidden="true">♧</span> Maklumat kad pengenalan dan telefon digunakan untuk pengesahan sahaja dan tidak dipaparkan kepada pengundi lain.</div>
+          <div class="privacy"><span aria-hidden="true">♧</span> Nombor kad pengenalan digunakan untuk pengesahan sahaja dan tidak dipaparkan kepada pengundi lain.</div>
           <div id="login-error" class="message" role="alert" hidden></div>
         </div>
         <div id="vote-stage" class="glass voting-panel" hidden>
@@ -234,12 +232,12 @@
     $('search').addEventListener('input',e=>{state.query=e.target.value.toLocaleLowerCase('ms').trim();renderCandidates()});
     $('login-form').addEventListener('submit',async e=>{
       e.preventDefault();if(state.pending)return;
-      const ic=$('ic').value.replace(/\D/g,''),phone=$('phone').value.replace(/\D/g,'');
-      if(ic.length!==12||phone.length!==4){error('login-error','Masukkan nombor KP 12 digit dan empat digit terakhir telefon.');return}
+      const ic=$('ic').value.replace(/\D/g,'');
+      if(ic.length!==12){error('login-error','Masukkan nombor kad pengenalan 12 digit yang sah.');return}
       state.pending=true;$('login-button').disabled=true;error('login-error','');
       try{
-        const r=await server('loginVoter',ic,phone);state.voterToken=r.token;$('welcome-name').textContent='Selamat memilih, '+r.name+' ♡';
-        $('ic').value='';$('phone').value='';state.selection=[];renderCandidates();stage('vote');
+        const r=await server('loginVoter',ic);state.voterToken=r.token;$('welcome-name').textContent='Selamat memilih, '+r.name+' ♡';
+        $('ic').value='';state.selection=[];renderCandidates();stage('vote');
         if(r.alreadyVoted)stage('success');
       }catch(err){error('login-error',err.message||'Pengesahan gagal. Sila cuba lagi.')}
       finally{state.pending=false;$('login-button').disabled=false}

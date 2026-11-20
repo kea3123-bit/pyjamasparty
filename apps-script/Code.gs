@@ -9,7 +9,7 @@
  * Script Property REQUIRED:
  * ADMIN_PASSWORD = a unique, strong admin password (16+ characters suggested)
  *
- * No voter IC/phone number is ever stored in the vote database.
+ * No voter IC number is ever stored in the vote database.
  */
 
 const APP = Object.freeze({
@@ -35,7 +35,7 @@ function doGet(e) {
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
 
-/** Public: exposes only nominee names and gender, never KP/telephone. */
+/** Public: exposes only nominee names and gender, never KP. */
 function getPublicData() {
   const db = ensureDb_();
   const settings = readSettings_(db);
@@ -49,20 +49,19 @@ function getPublicData() {
 }
 
 /**
- * Voter login verifies BOTH the full 12-digit IC and last 4 phone digits
- * against the original, read-only staff spreadsheet.
+ * Voter login checks the full 12-digit IC against the original,
+ * read-only staff spreadsheet. Only one field is requested on the website.
  */
-function loginVoter(icInput, lastFourInput) {
+function loginVoter(icInput) {
   const ic = digits_(icInput);
-  const phoneFour = digits_(lastFourInput);
-  if (!/^\d{12}$/.test(ic) || !/^\d{4}$/.test(phoneFour)) {
-    throw new Error('Nombor KP atau empat digit telefon tidak sah.');
+  if (!/^\d{12}$/.test(ic)) {
+    throw new Error('Nombor kad pengenalan mesti mempunyai 12 digit.');
   }
   const db = ensureDb_();
   if (!readSettings_(db).open) throw new Error('Sesi undian telah ditutup.');
   const roster = readRoster_();
-  const person = roster.find(p => p.ic === ic && p.phone.slice(-4) === phoneFour);
-  if (!person) throw new Error('Maklumat tidak sepadan dengan rekod sekolah. Sila semak nombor KP dan telefon.');
+  const person = roster.find(p => p.ic === ic);
+  if (!person) throw new Error('Nombor kad pengenalan tidak ditemui dalam senarai guru dan AKP sekolah.');
 
   const voterHash = sha_('pengundi:' + ic);
   const token = Utilities.getUuid() + Utilities.getUuid();
@@ -229,9 +228,9 @@ function readRoster_() {
   const roster = SpreadsheetApp.openById(APP.ROSTER_ID).getSheetByName(APP.ROSTER_TAB);
   if (!roster) throw new Error('Tab senarai nama tidak ditemui.');
   if (roster.getLastRow() < 2) return [];
-  return roster.getRange(2,1,roster.getLastRow()-1,5).getDisplayValues()
-    .map(row => ({name:String(row[1]||'').trim(),ic:digits_(row[2]),phone:digits_(row[4])}))
-    .filter(p => p.name && /^\d{12}$/.test(p.ic) && p.phone.length >= 4);
+  return roster.getRange(2,1,roster.getLastRow()-1,3).getDisplayValues()
+    .map(row => ({name:String(row[1]||'').trim(),ic:digits_(row[2])}))
+    .filter(p => p.name && /^\d{12}$/.test(p.ic));
 }
 
 function readCandidates_(db) {

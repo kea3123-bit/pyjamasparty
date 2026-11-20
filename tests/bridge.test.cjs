@@ -12,7 +12,7 @@ const runner={
   withSuccessHandler(fn){this.success=fn;return this},
   withFailureHandler(fn){this.failure=fn;return this},
   getPublicData(){calls.push('getPublicData');this.success({candidates:[{id:'1',name:'Contoh',gender:'P'}]})},
-  loginVoter(ic,last4){calls.push(['loginVoter',ic,last4]);this.success({token:'test'})}
+  loginVoter(ic){calls.push(['loginVoter',ic]);this.success({token:'test'})}
 };
 const context={
   window:{top,google:{script:{run:runner}},addEventListener:(type,fn)=>{if(type==='message')onMessage=fn}},
@@ -37,7 +37,7 @@ send('https://kea3123-bit.github.io','getPublicData',[],2);
 assert.equal(calls.length,1);
 assert.equal(out.at(-1).payload.kind,'BRIDGE_RESULT');
 assert.equal(out.at(-1).payload.result.candidates[0].name,'Contoh');
-send('https://kea3123-bit.github.io','loginVoter',['900101021234','1234'],3);
-assert.deepEqual(calls.at(-1),['loginVoter','900101021234','1234']);
+send('https://kea3123-bit.github.io','loginVoter',['900101021234'],3);
+assert.deepEqual(calls.at(-1),['loginVoter','900101021234']);
 assert.equal(out.at(-1).payload.ok,true);
 console.log('Passed: bridge origin restriction, method whitelist, google.script.run proxy, response correlation.');

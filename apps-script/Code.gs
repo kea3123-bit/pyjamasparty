@@ -2,9 +2,9 @@
  * A NIGHT UNDER THE STARS — SISTEM UNDIAN BINTANG MALAM
  * SMK Bandar Baru Sungai Lalang · 26 November 2026
  *
- * Deploy as Google Apps Script Web App:
- * Execute as: Me (pemilik/pentadbir)
- * Who has access: your intended school audience.
+ * This is a DATABASE BRIDGE ONLY. The complete voting UI lives on GitHub Pages.
+ * Apps Script serves a tiny hidden iframe bridge using google.script.run.
+ * Deploy as a Web App: Execute as Me; access must permit school voters.
  *
  * Script Property REQUIRED:
  * ADMIN_PASSWORD = a unique, strong admin password (16+ characters suggested)
@@ -22,11 +22,17 @@ const APP = Object.freeze({
   SESSION_SECONDS: 14400
 });
 
-/** Entry point: HTML and Apps Script share the same origin. */
-function doGet() {
-  return HtmlService.createHtmlOutputFromFile('Index')
-    .setTitle('Undian Bintang Malam | A Night Under the Stars')
-    .addMetaTag('viewport', 'width=device-width, initial-scale=1');
+/** Serves a message-only bridge, never the public voting interface. */
+function doGet(e) {
+  const raw = (e && e.parameter && e.parameter.channel) || '';
+  const channel = String(raw).replace(/[^a-fA-F0-9]/g, '').slice(0,64);
+  const template = HtmlService.createTemplateFromFile('Bridge');
+  template.channel = channel;
+  return template.evaluate()
+    .setTitle('Sambungan Data Undian Bintang Malam')
+    // Required for hosting the full UI on GitHub Pages.
+    // Bridge.html checks the embedding page's origin + random session channel.
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
 
 /** Public: exposes only nominee names and gender, never KP/telephone. */

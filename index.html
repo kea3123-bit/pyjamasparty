@@ -46,7 +46,7 @@
     .stage{max-width:960px;margin:0 auto}.glass{background:linear-gradient(135deg,rgba(36,37,88,.91),rgba(18,24,65,.87));border:1px solid var(--line);box-shadow:0 22px 75px #02061480,inset 0 1px 0 #ffffff13;border-radius:28px;position:relative;overflow:hidden}.glass:before{content:"";height:3px;position:absolute;top:0;left:14%;right:14%;background:linear-gradient(90deg,transparent,#f8d779,transparent)}
     .login-card{max-width:560px;margin:auto;padding:33px 37px 37px}.login-card h3{font:600 27px/1.2 "Fraunces",serif;margin:0 0 6px}.login-card p{margin:0 0 23px;color:#bfc7e9;font-size:14px}.label{display:block;font-weight:700;font-size:13px;margin:15px 0 7px;color:#e8e9ff}
     .field{width:100%;background:#0a123a;border:1px solid #7b7da27b;border-radius:13px;color:#fff;padding:14px 15px;transition:border .2s;font-size:16px}.field:focus{border-color:var(--gold)}.field::placeholder{color:#8f98bf}.field-help{font-size:12px;color:#afb8dd;margin:8px 0 0}
-    .login-card .cta{width:100%;margin-top:23px}.quiet{font-size:12px;color:#a9b0d2;margin:19px 0 0;text-align:center}.privacy{font-size:12px;color:#bbc4e1;display:flex;gap:9px;margin:15px 0 0;align-items:flex-start}.privacy[hidden]{display:none}.privacy span{color:#eecb79}.live-entry{text-align:center;padding:5px 0 0}.live-entry .cta{display:flex}.live-entry p{margin:17px auto 0;max-width:380px;color:#c3c9e8;font-size:13px}
+    .login-card .cta{width:100%;margin-top:23px}.quiet{font-size:12px;color:#a9b0d2;margin:19px 0 0;text-align:center}.privacy{font-size:12px;color:#bbc4e1;display:flex;gap:9px;margin:15px 0 0;align-items:flex-start}.privacy[hidden]{display:none}.privacy span{color:#eecb79}
     .voting-panel{padding:30px 31px 28px}.voting-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.voting-top h3{font:600 26px "Fraunces",serif;margin:0}.voting-top p{margin:4px 0 0;color:#c0c8e7;font-size:13px}.pill{white-space:nowrap;border:1px solid #dbbd6a99;color:#fff1a3;border-radius:999px;background:#c99e3d1d;padding:7px 12px;font-size:12px;font-weight:800}
     .selection-bar{display:flex;align-items:center;gap:10px;background:#0c143e;border:1px solid #b9a4fc47;border-radius:19px;padding:15px 17px;margin:22px 0 19px}.selection-label{margin-right:auto;font-size:13px;color:#c9cceb}.selection-label b{display:block;color:#fff;font-size:15px}.pick-slot{display:grid;place-items:center;flex-shrink:0;width:49px;height:49px;border:1px dashed #b0abdb;border-radius:14px;color:#666eac;font-size:26px;background:#111845;transition:.3s}.pick-slot.filled{border:1px solid var(--gold);background:linear-gradient(140deg,#f9da8c,#f4ad52);color:#382950;box-shadow:0 0 18px #ffca6160;animation:pop .3s ease}@keyframes pop{50%{transform:scale(1.16)}}
     .filters{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-bottom:19px}.chip{border:1px solid #7c85b866;padding:9px 13px;background:#1c2556;color:#d6dcf6;border-radius:999px;font-size:13px;font-weight:700}.chip[aria-pressed="true"]{border-color:#f6d27a;background:#ead28e22;color:#ffebae}.search{margin-left:auto;max-width:267px;min-width:170px;padding:10px 13px;font-size:14px;border-radius:12px}
@@ -96,21 +96,17 @@
       </section>
       <section id="mengundi" class="stage" aria-label="Borang undian">
         <div class="section-title"><span class="script-note">Tonight, you are the star!</span><h2>Undian Bintang Malam</h2><p>Satu pengundi, tiga pilihan, satu malam penuh kenangan.</p></div>
-        <div id="preview-notice" class="notice" hidden>✦ Anda sedang berada di laman sambutan rasmi. Tekan butang di bawah untuk masuk ke sistem undian Google Apps Script yang merekodkan undi sebenar.</div>
+        <div id="bridge-status" class="notice" role="status">✦ Sedang menghubungkan sistem undian ke Google Sheets...</div>
         <div id="login-stage" class="glass login-card">
           <h3 id="login-heading">Selamat datang, warga BBSL ♡</h3>
           <p id="login-description">Sahkan identiti anda sebelum memilih tiga bintang yang paling bersinar.</p>
-          <div id="live-entry" class="live-entry" hidden>
-            <a class="cta" href="https://script.google.com/macros/s/AKfycbwsfZkaneRyH58UNPqX3RS-igyyItIxbKDvLxigKMlvP6S8j6kgMqPTpxp7wbtze_g5nA/exec"><span aria-hidden="true">★</span> Masuk ke Portal Undian Rasmi</a>
-            <p>Teruskan menggunakan akaun Google yang mempunyai akses. Satu warga sekolah boleh menghantar tiga pilihan sekali sahaja.</p>
-          </div>
           <form id="login-form">
             <label class="label" for="ic">Nombor kad pengenalan (12 digit)</label>
             <input id="ic" class="field" name="ic" inputmode="numeric" pattern="[0-9-]{12,14}" autocomplete="off" placeholder="Contoh: 900101021234" required aria-describedby="ic-help">
             <div id="ic-help" class="field-help">Nombor ini disemak pada senarai guru dan AKP sekolah.</div>
             <label class="label" for="phone">Empat digit terakhir telefon</label>
             <input id="phone" class="field" name="phone" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="off" placeholder="Contoh: 1234" required>
-            <button type="submit" id="login-button" class="cta"><span aria-hidden="true">✦</span> Teruskan ke Undian</button>
+            <button type="submit" id="login-button" class="cta" disabled><span aria-hidden="true">✦</span> Teruskan ke Undian</button>
           </form>
           <div class="privacy"><span aria-hidden="true">♧</span> Maklumat kad pengenalan dan telefon digunakan untuk pengesahan sahaja dan tidak dipaparkan kepada pengundi lain.</div>
           <div id="login-error" class="message" role="alert" hidden></div>
@@ -139,7 +135,7 @@
       </section>
       <div class="poster-teaser">✧ Bersedia untuk malam penuh magis? <button id="poster-bottom" type="button">Lihat poster rasmi</button> ✧</div>
     </main>
-    <footer>SMK Bandar Baru Sungai Lalang · A Night Under the Stars 2026 <span aria-hidden="true">✦</span> <button id="admin-trigger" type="button" class="footer-link">Log masuk pentadbir</button></footer>
+    <footer>SMK Bandar Baru Sungai Lalang · A Night Under the Stars 2026 <span aria-hidden="true">✦</span> <button id="admin-trigger" type="button" class="footer-link" disabled>Log masuk pentadbir</button></footer>
   </div>
 
   <div id="confirm-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title" hidden>
@@ -168,22 +164,45 @@
   <script>
   (() => {
     'use strict';
-    const DEMO = !(window.google && google.script && google.script.run);
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwsfZkaneRyH58UNPqX3RS-igyyItIxbKDvLxigKMlvP6S8j6kgMqPTpxp7wbtze_g5nA/exec';
+    const CHANNEL = Array.from(crypto.getRandomValues(new Uint8Array(16)),x=>x.toString(16).padStart(2,'0')).join('');
+    let bridgeSource,bridgeOrigin,nextRequestId=0;
+    const pending=new Map();
+    const bridgeReady=new Promise((resolve,reject)=>{
+      const timeout=setTimeout(()=>reject(new Error('Sambungan Apps Script tidak memberi respons. Semak deployment Web App dan kebenaran akses.')),20000);
+      window.addEventListener('message',event=>{
+        const data=event.data;
+        if(!data||data.channel!==CHANNEL||typeof data.kind!=='string')return;
+        if(data.kind==='BRIDGE_READY'){
+          if(!event.source||(!/^https:\/\/(?:script\.google\.com|(?:[a-z0-9-]+\.)?googleusercontent\.com)$/.test(event.origin)&&event.origin!=='null'))return;
+          bridgeSource=event.source;bridgeOrigin=event.origin;
+          clearTimeout(timeout);resolve();return;
+        }
+        if(data.kind==='BRIDGE_RESULT'&&event.source===bridgeSource&&event.origin===bridgeOrigin){
+          const task=pending.get(data.id);if(!task)return;
+          clearTimeout(task.timeout);pending.delete(data.id);
+          if(data.ok)task.resolve(data.result);
+          else task.reject(new Error(data.error||'Ralat pada pangkalan data.'));
+        }
+      });
+      const frame=document.createElement('iframe'),url=new URL(APPS_SCRIPT_URL);
+      url.searchParams.set('channel',CHANNEL);
+      frame.src=url.href;frame.title='Sambungan selamat ke Google Sheets';
+      frame.referrerPolicy='no-referrer';
+      frame.setAttribute('aria-hidden','true');frame.tabIndex=-1;
+      frame.style.cssText='position:absolute;left:-9999px;top:0;width:1px;height:1px;opacity:0;border:0;pointer-events:none';
+      document.body.append(frame);
+    });
     const $ = id => document.getElementById(id);
     const state = { candidates:[],selection:[],filter:'all',query:'',voterToken:null,adminToken:null,config:{maxVotes:3,femaleWinners:7,maleWinners:3,open:true},pending:false };
-    const demoNames = [
-      ['Bintang Perempuan 01','P'],['Bintang Perempuan 02','P'],['Bintang Perempuan 03','P'],['Bintang Perempuan 04','P'],['Bintang Perempuan 05','P'],['Bintang Perempuan 06','P'],
-      ['Bintang Lelaki 01','L'],['Bintang Lelaki 02','L'],['Bintang Lelaki 03','L'],['Bintang Lelaki 04','L']
-    ];
-    const demoCandidates = demoNames.map((x,i) => ({id:'demo-'+(i+1),name:x[0],gender:x[1]}));
     const escapeHtml = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     function server(fn,...args){
-      if(DEMO){
-        if(fn==='getPublicData') return Promise.resolve({candidates:demoCandidates,open:true, maxVotes:3,femaleWinners:7,maleWinners:3});
-        if(fn==='loginVoter')return Promise.resolve({token:'demo',name:'Pengunjung Pratonton'});
-        return Promise.reject(new Error('Fungsi ini hanya aktif pada pautan Apps Script yang telah diterbitkan.'));
-      }
-      return new Promise((resolve,reject)=>google.script.run.withSuccessHandler(resolve).withFailureHandler(e=>reject(new Error(e.message||String(e))))[fn](...args));
+      return bridgeReady.then(()=>new Promise((resolve,reject)=>{
+        const id=++nextRequestId;
+        const timeout=setTimeout(()=>{pending.delete(id);reject(new Error('Permintaan mengambil masa terlalu lama. Cuba sekali lagi.'))},30000);
+        pending.set(id,{resolve,reject,timeout});
+        bridgeSource.postMessage({kind:'BRIDGE_REQUEST',channel:CHANNEL,id,method:fn,args},bridgeOrigin==='null'?'*':bridgeOrigin);
+      }));
     }
     function error(id,msg){$(id).textContent=msg||'';$(id).hidden=!msg}
     function stage(name){['login','vote','success','closed'].forEach(x=>$(x+'-stage').hidden=x!==name)}
@@ -216,7 +235,7 @@
     $('login-form').addEventListener('submit',async e=>{
       e.preventDefault();if(state.pending)return;
       const ic=$('ic').value.replace(/\D/g,''),phone=$('phone').value.replace(/\D/g,'');
-      if(!DEMO&&(ic.length!==12||phone.length!==4)){error('login-error','Masukkan nombor KP 12 digit dan empat digit terakhir telefon.');return}
+      if(ic.length!==12||phone.length!==4){error('login-error','Masukkan nombor KP 12 digit dan empat digit terakhir telefon.');return}
       state.pending=true;$('login-button').disabled=true;error('login-error','');
       try{
         const r=await server('loginVoter',ic,phone);state.voterToken=r.token;$('welcome-name').textContent='Selamat memilih, '+r.name+' ♡';
@@ -230,7 +249,6 @@
       if(state.pending||state.selection.length!==3)return;
       state.pending=true;$('vote-final').disabled=true;error('vote-error','');
       try{
-        if(DEMO){closeModal('confirm-modal');error('vote-error','Ini hanyalah pratonton interaktif. Untuk merekod undi sebenar, gunakan pautan Apps Script.');return}
         const r=await server('castVote',state.voterToken,state.selection.slice());if(!r.ok)throw new Error(r.message||'Undian gagal');
         closeModal('confirm-modal');stage('success');confetti();
       }catch(err){closeModal('confirm-modal');error('vote-error',err.message||'Undian gagal dihantar. Sila cuba lagi.')}
@@ -273,9 +291,19 @@
       window.addEventListener('resize',resize,{passive:true});resize();requestAnimationFrame(draw)
     }
     async function init(){
-      makeStars();if(DEMO){$('preview-notice').hidden=false;$('login-form').hidden=true;$('live-entry').hidden=false;$('login-heading').textContent='Pintu masuk ke malam berbintang ✦';$('login-description').textContent='Sedia untuk memilih tiga bintang? Sistem undian rasmi menanti anda.';document.querySelector('.privacy').hidden=true;$('admin-trigger').hidden=true}
-      try{const r=await server('getPublicData');state.candidates=Array.isArray(r.candidates)?r.candidates:[];state.config={...state.config,maxVotes:r.maxVotes||3,femaleWinners:r.femaleWinners||7,maleWinners:r.maleWinners||3,open:r.open!==false};if(!state.config.open)stage('closed');renderCandidates()}
-      catch(err){error('login-error','Sistem tidak dapat memuatkan senarai calon: '+err.message)}
+      makeStars();
+      try{
+        const r=await server('getPublicData');
+        state.candidates=Array.isArray(r.candidates)?r.candidates:[];
+        if(!state.candidates.length)throw new Error('Tiada calon ditemui. Semak akses senarai nama dan tab CALON dalam database.');
+        state.config={...state.config,maxVotes:r.maxVotes||3,femaleWinners:r.femaleWinners||7,maleWinners:r.maleWinners||3,open:r.open!==false};
+        $('bridge-status').hidden=true;$('login-button').disabled=false;$('admin-trigger').disabled=false;
+        if(!state.config.open)stage('closed');
+        renderCandidates();
+      }catch(err){
+        $('bridge-status').textContent='⚠ Sambungan pangkalan data belum aktif. Pastikan Apps Script versi jambatan telah diterbitkan.';
+        error('login-error','Sistem tidak dapat memuatkan senarai calon: '+err.message);
+      }
     }
     init();
   })();

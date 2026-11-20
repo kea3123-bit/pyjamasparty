@@ -22,20 +22,26 @@ Lajur sumber Sheet1: BIL, NAMA, NOKP, JAWATAN, NO TELEFON. Semakan awal: **69 ba
 
 **Penting:** Jantina calon mula-mula ditetapkan menggunakan digit akhir KP (genap = P, ganjil = L). Pentadbir **mesti menyemak dan membetulkannya** dalam lajur C tab CALON kerana kaedah ini tidak 100% tepat. Jangan ubah ID calon dalam lajur A selepas undian bermula.
 
-## Hidupkan undian sebenar melalui Google Apps Script
+## Seni bina yang betul
 
-> Laman [GitHub Pages](https://kea3123-bit.github.io/pyjamasparty/) ialah portal bertema animasi untuk masuk ke **[sistem undian rasmi Apps Script](https://script.google.com/macros/s/AKfycbwsfZkaneRyH58UNPqX3RS-igyyItIxbKDvLxigKMlvP6S8j6kgMqPTpxp7wbtze_g5nA/exec)**. Pengesahan dan rekod undi berlaku pada Apps Script, bukan GitHub Pages.
+**Seluruh UI berada di GitHub Pages.** Calon, animasi, pengesahan pengundi, tiga pilihan, paparan selesai dan leaderboard admin semuanya beroperasi pada halaman [https://kea3123-bit.github.io/pyjamasparty/](https://kea3123-bit.github.io/pyjamasparty/).
+
+Google Apps Script hanyalah **backend sambungan Google Sheets**. Ia menyediakan fail Bridge.html (komponen kecil tanpa UI) dan Code.gs (fungsi server). GitHub Pages berkomunikasi dengan Bridge.html dalam iframe tersembunyi melalui mesej yang disahkan menggunakan origin GitHub dan token saluran rawak. Google Apps Script menggunakan google.script.run untuk membaca/menulis ke Sheets. Nombor KP/telefon tidak dimasukkan ke dalam query URL.
+
+## Aktifkan backend Apps Script
+
+> URL backend semasa: [Apps Script /exec](https://script.google.com/macros/s/AKfycbwsfZkaneRyH58UNPqX3RS-igyyItIxbKDvLxigKMlvP6S8j6kgMqPTpxp7wbtze_g5nA/exec). Pautan ini hanya untuk sambungan data, bukan lagi untuk memaparkan laman undian.
 
 1. Buka [Google Sheets database undian](https://docs.google.com/spreadsheets/d/1JTDub0wvhC8O991Gnc0neJdHupONWCM5PO9_T0-mKVw/edit), klik **Extensions → Apps Script**.
 2. Gantikan kandungan fail **Code.gs** dalam editor dengan [apps-script/Code.gs](apps-script/Code.gs).
-3. Klik **+ → HTML** dan namakan fail **Index** (bukan Index.html.html). Tampal kandungan [apps-script/Index.html](apps-script/Index.html).
+3. Klik **+ → HTML**, namakan fail **Bridge**. Tampal kandungan [apps-script/Bridge.html](apps-script/Bridge.html). Fail Index.html yang lama tidak lagi digunakan; boleh dipadam daripada projek Apps Script jika mahu.
 4. Buka **Project Settings → Script properties → Add script property**. Namanya **ADMIN_PASSWORD**, dan nilainya ialah kata laluan pentadbir yang unik, sekurang-kurangnya 12 aksara (16+ disyorkan). **Jangan simpan kata laluan dalam GitHub, HTML atau Google Sheets.**
-5. Klik **Deploy → New deployment → Web app**. Pilih **Execute as: Me (pemilik skrip)** supaya pengundi tidak perlu berkongsi akses pangkalan data. Untuk **Who has access**, gunakan **Anyone within your organisation** jika semua pengundi mempunyai akaun organisasi yang sama; jika tidak, pilih capaian yang sesuai. Jika anda membenarkan Anyone, sesiapa yang mempunyai pautan boleh membuka halaman, tetapi hanya kakitangan dengan KP dan telefon yang sepadan boleh mengundi.
-6. Klik **Deploy**, benarkan akses kepada dua Google Sheets dan buka URL yang berakhir dengan **/exec**.
-7. Pada bukaan pertama, tab CALON akan terisi secara automatik dengan **67 individu unik**. Semak semua jantina/nama. Status buka undian terletak pada **TETAPAN!B2**; tukar nilai kepada FALSE sementara anda menyemak calon.
-8. Edarkan pautan GitHub Pages sebagai **portal sambutan**; butang **Masuk ke Portal Undian Rasmi** akan membawa pengundi ke URL Apps Script /exec yang telah diberikan. Anda juga boleh berkongsi pautan Apps Script secara terus.
+5. Klik **Deploy → Manage deployments → Edit (ikon pensel)** untuk deployment URL sedia ada, pilih **New version**. Tetapan Web app: **Execute as: Me (pemilik skrip)** supaya pengundi tidak memerlukan akses terus ke Google Sheets; **Who has access** mesti membenarkan pelawat yang ingin mengundi. Cuba capaian organisasi sekolah dahulu jika semua menggunakan akaun organisasi. Jika iframe di GitHub Pages gagal memuatkan kerana log masuk Google atau sekatan cookies pihak ketiga, semak semula tetapan capaian (contohnya Anyone, jika sekolah bersetuju), sambil mengekalkan pengesahan KP+telefon pada server.
+6. Klik **Deploy**, benarkan kebenaran kepada dua Google Sheets jika diminta. Pilih **Edit deployment sedia ada**, bukan cipta deployment baru, supaya URL /exec tidak berubah.
+7. Buka **GitHub Pages**, tunggu pangkalan data disambungkan. Tab CALON akan terisi automatik dengan **67 individu unik** pada panggilan data pertama. Semak nama/jantina dan status TETAPAN!B2. Anda boleh tukar kepada FALSE sehingga selesai semakan.
+8. Edarkan **hanya URL GitHub Pages** sebagai laman undian. Pengundi akan kekal di GitHub Pages ketika mengundi dan menyemak pilihan.
 
-Selepas kod diubah, pilih **Deploy → Manage deployments → Edit → New version → Deploy**. Hanya simpan fail tidak akan mengubah laman yang telah diterbitkan.
+Jika mesej **Sambungan pangkalan data belum aktif** masih dipaparkan, periksa bahawa fail Bridge.html wujud, fungsi doGet dalam Code.gs versi terbaru, deployment Web App telah dikemas kini, dan akaun mempunyai akses. GitHub Pages akan menghalang log masuk pengundi sehingga sambungan berjaya.
 
 ## Struktur tab database
 
@@ -66,12 +72,12 @@ Sekiranya undian seri pada tempat ketujuh atau ketiga, paparan disusun mengikut 
 
 ## Struktur repo
 
-- **index.html** — portal sambutan GitHub Pages dengan pautan ke sistem undian rasmi; GitHub Pages sendiri tidak merekod undi.
+- **index.html** — keseluruhan laman undian GitHub Pages, termasuk admin dashboard.
 - **assets/poster-web.jpg** — poster rasmi yang dibekalkan, dioptimumkan untuk laman web.
 - **apps-script/Code.gs** — keselamatan, logik undi, pengesahan serta pangkalan data.
-- **apps-script/Index.html** — laman sebenar yang dijalankan bersama Code.gs.
+- **apps-script/Bridge.html** — jambatan mesej tersembunyi untuk panggilan pelayan; tiada antaramuka undian.
 
-Fail index.html dan apps-script/Index.html perlu diseragamkan jika rekaan UI ditukar.
+Antaramuka hanya perlu diubah dalam index.html pada GitHub. Backend hanya perlu dikemas kini apabila fungsi data/pengesahan berubah.
 
 ## Privasi
 

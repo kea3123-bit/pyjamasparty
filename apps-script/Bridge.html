@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ms">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Sambungan Data Undian Bintang Malam</title>
+</head>
+<body>
+  <p>Sambungan data. Buka laman undian melalui GitHub Pages SMK BBSL.</p>
+  <script>
+  (() => {
+    'use strict';
+    const FRONTEND_ORIGIN = 'https://kea3123-bit.github.io';
+    const CHANNEL = '<?!= channel ?>';
+    const ALLOWED = Object.freeze({
+      getPublicData:0,
+      loginVoter:2,
+      castVote:2,
+      adminLogin:1,
+      adminLeaderboard:1,
+      adminSetVotingOpen:2,
+      adminLogout:1
+    });
+
+    function reply(message) {
+      window.top.postMessage(Object.assign({channel:CHANNEL},message),FRONTEND_ORIGIN);
+    }
+
+    window.addEventListener('message',event => {
+      if(event.source !== window.top || event.origin !== FRONTEND_ORIGIN)return;
+      const message=event.data;
+      if(!message || message.kind!=='BRIDGE_REQUEST' || message.channel!==CHANNEL)return;
+      const id=message.id,method=message.method,args=message.args;
+      if(!Number.isSafeInteger(id)||id<1)return;
+      if(!Object.prototype.hasOwnProperty.call(ALLOWED,method)||!Array.isArray(args)||args.length!==ALLOWED[method]){
+        reply({kind:'BRIDGE_RESULT',id,ok:false,error:'Permintaan tidak dibenarkan.'});
+        return;
+      }
+      try{
+        google.script.run
+          .withSuccessHandler(result=>reply({kind:'BRIDGE_RESULT',id,ok:true,result}))
+          .withFailureHandler(error=>reply({kind:'BRIDGE_RESULT',id,ok:false,error:String(error&&error.message||error)}))
+          [method](...args);
+      }catch(error){
+        reply({kind:'BRIDGE_RESULT',id,ok:false,error:String(error&&error.message||error)});
+      }
+    });
+
+    function announce(){
+      if(!CHANNEL)return;
+      if(window.google && google.script && google.script.run)reply({kind:'BRIDGE_READY'});
+      else setTimeout(announce,150);
+    }
+    announce();
+  })();
+  </script>
+</body>
+</html>

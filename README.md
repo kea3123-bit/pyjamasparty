@@ -5,8 +5,9 @@ Laman undian bertema langit malam untuk **Majlis Makan Malam Tahunan SMK Bandar 
 ## Ciri utama
 
 - Animasi bintang berkelip, bintang jatuh, bulan sabit, ilustrasi bantal/selimut dan poster rasmi.
-- **Roda Impian interaktif manual dengan semua nama dalam satu roda**: semua calon aktif hadir sebagai sektor pada roda yang sama. Pengundi menyeret roda sendiri dengan jari atau tetikus; nama penuh pada penunjuk emas dipaparkan dalam panel khusus. Tiada kumpulan, putaran automatik atau pemilihan rawak.
+- **Roda Impian interaktif manual:** setiap roda mengandungi semua calon aktif untuk satu jantina. Pengundi menyeret roda sendiri dengan jari atau tetikus; nama penuh pada penunjuk emas dipaparkan dalam panel khusus. Tiada kumpulan, putaran automatik atau pemilihan rawak.
 - **Susun atur berfokus pada roda:** bar kategori dan carian yang ringkas berada di atas, roda besar di tengah (hingga 770px pada desktop), manakala nama pada penunjuk emas, kawalan putaran dan butang Berikan Bintang terletak betul-betul di bawah roda.
+- **Dua roda mengikut jantina:** butang Roda Perempuan dan Roda Lelaki memisahkan semua calon mengikut jantina, tanpa pecahan kumpulan. Satu roda besar dipaparkan pada satu masa; pengundi masih mempunyai tiga undian keseluruhan untuk calon daripada mana-mana roda.
 - **Singkatan nama boleh diubah di Google Sheets:** setiap sektor roda memaparkan singkatan daripada lajur E (`SINGKATAN`) tab `CALON`; nama penuh tetap ditunjukkan di bawah roda dan pada pengesahan undian.
 - Pengundi hanya perlu memasukkan **nombor kad pengenalan 12 digit**; pengesahan dibuat menggunakan senarai guru dan AKP pada pelayan.
 - Setiap pengundi memilih **tepat 3 calon berbeza**, dan **hanya satu penghantaran undi** dibenarkan.
@@ -78,10 +79,10 @@ Sekiranya undian seri pada tempat ketujuh atau ketiga, paparan disusun mengikut 
 ## Cara pengundi menggunakan Roda Impian
 
 1. Masukkan nombor kad pengenalan 12 digit untuk mengakses undian.
-2. Semua nama calon dipaparkan serentak pada roda apabila kategori **Semua** aktif. Kotak carian boleh menyerlahkan nama sepadan pada roda tanpa menukar nama lain atau membuat pilihan automatik.
+2. Pilih **Roda Perempuan** atau **Roda Lelaki**. Setiap roda memaparkan semua calon bagi jantina tersebut tanpa pecahan kumpulan. Kotak carian boleh menyerlahkan nama penuh atau singkatan pada roda aktif tanpa membuat pilihan automatik.
 3. **Seret roda secara manual** menggunakan jari (telefon) atau tetikus (komputer). Boleh juga gunakan butang **Pusing kiri / Pusing kanan** untuk menggerakkannya satu calon pada satu masa.
 4. Apabila penunjuk emas berhenti pada calon yang dikehendaki, tekan **Berikan Bintang**. Ulang untuk **tiga calon berbeza**; pilihan boleh dibuang sebelum dihantar.
-5. Tekan **Sahkan 3 Pilihan** dan sahkan penghantaran terakhir. Disebabkan roda mengandungi banyak sektor, nama penuh calon yang berada di bawah penunjuk emas dipaparkan dengan huruf besar di sebelah roda. Calon yang telah dipilih kekal dalam roda tetapi tidak boleh menerima bintang kedua daripada pengundi yang sama.
+5. Tekan **Sahkan 3 Pilihan** dan sahkan penghantaran terakhir. Nama penuh calon yang berada di bawah penunjuk emas dipaparkan dengan jelas di bawah roda. Calon yang telah dipilih kekal dalam roda tetapi tidak boleh menerima bintang kedua daripada pengundi yang sama.
 
 ## Struktur repo
 

@@ -121,11 +121,18 @@
     .wheel-toolbar-fields{display:grid;grid-template-columns:max-content minmax(240px,1fr);gap:24px;align-items:end}
     .wheel-controls .filters{margin:0;gap:8px;align-self:end}
     .wheel-controls .chip{font-size:13px;padding:11px 14px}
+    .wheel-mode-switch{display:flex;flex-direction:column;gap:8px}
+    .wheel-mode-switch .wheel-field-label{margin:0}
+    .wheel-mode-switch .filter{min-width:155px;min-height:46px}
+    .wheel-mode-switch .filter[data-filter="P"][aria-pressed="true"]{background:linear-gradient(115deg,#82466e,#a05c92);border-color:#f4b9e5;color:#fff8ff;box-shadow:0 0 20px #e39bdb31}
+    .wheel-mode-switch .filter[data-filter="L"][aria-pressed="true"]{background:linear-gradient(115deg,#355b92,#4e6fbe);border-color:#b8d0ff;color:#fff;box-shadow:0 0 20px #8dbcf333}
     .wheel-search-wrap{min-width:0}
     .wheel-search-wrap .wheel-field-label{font-size:13px;margin:0 0 7px}
     .wheel-search-wrap .search{width:100%;max-width:none;margin:0;min-height:46px}
     .wheel-matches{grid-template-columns:repeat(2,minmax(0,1fr));max-height:124px;gap:7px}
     .wheel-arcade{padding:21px 25px 25px;min-width:0;border-radius:28px}
+    .wheel-arcade[data-gender="P"]{background:radial-gradient(ellipse at 50% 42%,#55376e89 0,#1b2051 57%,#0b1336 100%)}
+    .wheel-arcade[data-gender="L"]{background:radial-gradient(ellipse at 50% 42%,#315b8a87 0,#1b2051 57%,#0b1336 100%)}
     .wheel-marquee{font-size:clamp(22px,3.3vw,36px);margin:8px 0 10px}
     .wheel-frame{max-width:770px;width:100%;margin:6px auto 0}
     .wheel-footnote{font-size:13px;margin:17px 0 3px}
@@ -151,8 +158,9 @@
       .wheel-toolbar-heading h4{font-size:25px}
       .wheel-toolbar-heading .wheel-name-count{font-size:12px}
       .wheel-toolbar-fields{grid-template-columns:1fr;gap:13px}
-      .wheel-controls .filters{gap:6px;flex-wrap:nowrap}
+      .wheel-controls .filters{gap:8px;flex-wrap:nowrap;width:100%}
       .wheel-controls .chip{font-size:12px;flex:1;padding:9px 6px}
+      .wheel-mode-switch .filter{min-width:0}
       .wheel-matches{grid-template-columns:1fr}
       .wheel-arcade{padding:17px 12px 18px}
       .wheel-marquee{font-size:23px}
@@ -227,28 +235,27 @@
             <div class="wheel-controls">
               <div class="wheel-toolbar-heading">
                 <div><span class="wheel-eyebrow">✧ Giliran anda memilih</span><h4>Pusing roda, <em>pilih bintang!</em></h4></div>
-                <div id="wheel-name-count" class="wheel-name-count">★ Semua nama dalam satu roda ★</div>
+                <div id="wheel-name-count" class="wheel-name-count">★ Roda Perempuan ★</div>
               </div>
               <div class="wheel-toolbar-fields">
-                <div class="filters" role="group" aria-label="Tapis calon">
-                  <button class="chip filter" data-filter="all" aria-pressed="true" type="button">Semua</button>
-                  <button class="chip filter" data-filter="P" aria-pressed="false" type="button">✿ Perempuan</button>
-                  <button class="chip filter" data-filter="L" aria-pressed="false" type="button">✦ Lelaki</button>
-                </div>
-                <div class="wheel-search-wrap"><label class="wheel-field-label" for="search">Cari nama calon</label><input id="search" class="field search" type="search" placeholder="Sorot nama pada roda..." autocomplete="off"></div>
+                <div class="wheel-mode-switch"><span class="wheel-field-label">Pilih roda impian</span><div class="filters" role="group" aria-label="Pilih roda mengikut jantina">
+                  <button class="chip filter" data-filter="P" aria-pressed="true" type="button">✿ Roda Perempuan</button>
+                  <button class="chip filter" data-filter="L" aria-pressed="false" type="button">✦ Roda Lelaki</button>
+                </div></div>
+                <div class="wheel-search-wrap"><label class="wheel-field-label" for="search">Cari nama dalam roda yang dipilih</label><input id="search" class="field search" type="search" placeholder="Cari nama penuh atau singkatan..." autocomplete="off"></div>
               </div>
               <div id="search-matches" class="wheel-matches" aria-live="polite"></div>
             </div>
-            <div class="wheel-arcade">
-              <div class="wheel-marquee"><span>✦</span> RODA IMPIAN <span>✦</span></div>
+            <div id="wheel-arcade" class="wheel-arcade" data-gender="P">
+              <div class="wheel-marquee"><span>✦</span> <strong id="wheel-marquee-title">RODA PEREMPUAN</strong> <span>✦</span></div>
               <div class="wheel-frame">
-                <div id="wheel-face" class="wheel-face" aria-label="Roda impian calon bintang malam. Seret menggunakan jari atau tetikus untuk memusingkannya.">
+                <div id="wheel-face" class="wheel-face" aria-label="Roda perempuan. Seret menggunakan jari atau tetikus untuk memusingkannya.">
                   <div id="wheel-disc" class="wheel-disc"><canvas id="vote-wheel" width="700" height="700" role="img" aria-label="Roda singkatan nama calon undian"></canvas></div>
                   <div class="wheel-hub" aria-hidden="true">★</div>
                   <div class="wheel-pointer" aria-hidden="true"></div>
                 </div>
               </div>
-              <p class="wheel-footnote">✧ Nama ringkas pada roda · nama penuh pada penunjuk ✧</p>
+              <p class="wheel-footnote">✧ Dua roda berasingan · tiga undian keseluruhan · nama penuh pada penunjuk ✧</p>
               <div class="wheel-result-bar">
                 <div class="wheel-result-name">
                   <div class="wheel-stop-label">★ Nama pada penunjuk emas</div>
@@ -339,7 +346,7 @@
       document.body.append(frame);
     });
     const $ = id => document.getElementById(id);
-    const state = { candidates:[],selection:[],filter:'all',query:'',wheelEntries:[],wheelRotation:0,wheelSpinning:false,wheelWinner:null,voterToken:null,adminToken:null,config:{maxVotes:3,femaleWinners:7,maleWinners:3,open:true},pending:false };
+    const state = { candidates:[],selection:[],filter:'P',query:'',wheelEntries:[],wheelRotation:0,wheelRotations:{P:0,L:0},wheelSpinning:false,wheelWinner:null,voterToken:null,adminToken:null,config:{maxVotes:3,femaleWinners:7,maleWinners:3,open:true},pending:false };
     const escapeHtml = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     function server(fn,...args){
       return bridgeReady.then(()=>new Promise((resolve,reject)=>{
@@ -358,7 +365,7 @@
     document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal:not([hidden])').forEach(m=>closeModal(m.id))});
     ['poster-top','poster-bottom'].forEach(id=>$(id).addEventListener('click',()=>showModal('poster-modal')));
     function wheelPool(){
-      return state.candidates.filter(c=>state.filter==='all'||c.gender===state.filter);
+      return state.candidates.filter(c=>c.gender===state.filter);
     }
     function wheelShortName(c){
       const saved=String(c.shortName||'').trim();
@@ -371,6 +378,9 @@
       const prefixes=['MUHAMMAD','MUHAMAD','MOHAMAD','MOHAMMAD','MOHD','MD','SITI','NUR','NOR','NOOR','NURUL','WAN','ABDUL','SYED','SHARIFAH','TENGKU','NIK','RAJA','CHE','SRI','FARAH'];
       if(given.length>1&&prefixes.includes(first))return first[0]+'. '+given[1];
       return first.length>12?first.slice(0,11)+'.':first;
+    }
+    function matchesWheelSearch(c){
+      return c.name.toLocaleLowerCase('ms').includes(state.query)||wheelShortName(c).toLocaleLowerCase('ms').includes(state.query);
     }
     function drawWheel(){
       const canvas=$('vote-wheel'),ctx=canvas.getContext('2d');
@@ -390,7 +400,7 @@
         grad.addColorStop(0,'#1a1b49');grad.addColorStop(.33,palette[i%palette.length]);grad.addColorStop(1,palette[i%palette.length]);
         ctx.beginPath();ctx.moveTo(center,center);ctx.arc(center,center,radius,start,end);ctx.closePath();
         ctx.fillStyle=grad;ctx.fill();ctx.lineWidth=dense?1.6:5;ctx.strokeStyle='#f5d38d';ctx.stroke();
-        if(state.query&&c.name.toLocaleLowerCase('ms').includes(state.query)){
+        if(state.query&&matchesWheelSearch(c)){
           ctx.beginPath();ctx.arc(center,center,radius-21,start+.025,end-.025);ctx.lineWidth=13;ctx.strokeStyle='#ffed9b';ctx.stroke();
         }
         ctx.save();ctx.translate(center,center);ctx.rotate(angle);ctx.translate(radius*(dense?.69:.66),0);
@@ -438,7 +448,7 @@
       else if(busy)status.textContent='✦ Pusing perlahan-lahan. Nama penuh akan berubah mengikut penunjuk emas.';
       else if(alreadyChosen)status.textContent='Bintang sudah diberikan kepada calon ini. Pusing lagi untuk memilih orang lain.';
       else if(state.wheelWinner)status.textContent='★ '+state.wheelWinner.name+' — tekan “Berikan Bintang” untuk memilih calon ini.';
-      else if(state.query&&!wheelPool().some(c=>c.name.toLocaleLowerCase('ms').includes(state.query)))status.textContent='Nama tidak ditemui. Cuba ejaan lain atau kategori Semua.';
+      else if(state.query&&!wheelPool().some(matchesWheelSearch))status.textContent='Nama tidak ditemui pada roda ini. Cuba ejaan lain atau tukar roda.';
       else status.textContent='↶ Seret roda dengan jari atau tetikus hingga nama pilihan berada pada penunjuk emas. ↷';
       updatePointerPreview();
     }
@@ -461,16 +471,20 @@
       $('selection-hint').textContent=atLimit?'Ketiga-tiga bintang sudah dipilih. Sahkan undian anda.':'Pusing roda untuk '+(state.config.maxVotes-state.selection.length)+' lagi calon pilihan anda.';
       const pool=wheelPool();
       state.wheelEntries=pool;
-      $('wheel-name-count').textContent=pool.length+' nama dalam satu roda ★';
+      const genderName=state.filter==='P'?'Perempuan':'Lelaki';
+      $('wheel-name-count').textContent='★ '+pool.length+' calon '+genderName.toLocaleLowerCase('ms')+' ★';
+      $('wheel-marquee-title').textContent='RODA '+genderName.toLocaleUpperCase('ms');
+      $('wheel-arcade').dataset.gender=state.filter;
+      $('wheel-face').setAttribute('aria-label','Roda '+genderName.toLocaleLowerCase('ms')+'. Seret menggunakan jari atau tetikus untuk memusingkannya.');
       if(!preserveRotation){
-        state.wheelWinner=null;state.wheelRotation=0;
+        state.wheelWinner=null;state.wheelRotation=0;state.wheelRotations[state.filter]=0;
         const disc=$('wheel-disc');disc.classList.add('dragging');disc.style.transform='rotate(0deg)';
         window.requestAnimationFrame(()=>{if(!state.wheelSpinning)disc.classList.remove('dragging')});
       }
       drawWheel();
       const results=$('search-matches');results.textContent='';
       if(state.query){
-        const matches=pool.filter(c=>c.name.toLocaleLowerCase('ms').includes(state.query));
+        const matches=pool.filter(matchesWheelSearch);
         matches.slice(0,5).forEach(c=>{
           const button=document.createElement('button');button.type='button';
           button.textContent='✦ Sorot pada roda: '+c.name;
@@ -496,10 +510,14 @@
       error('vote-error','');renderCandidates();
     }
     document.querySelectorAll('.filter').forEach(b=>b.addEventListener('click',()=>{
-      if(state.wheelSpinning)return;
+      if(state.wheelSpinning||state.pending||state.selection.length>=state.config.maxVotes||state.filter===b.dataset.filter)return;
+      state.wheelRotations[state.filter]=state.wheelRotation;
       state.filter=b.dataset.filter;state.query='';$('search').value='';
+      state.wheelRotation=state.wheelRotations[state.filter];state.wheelWinner=null;
+      const disc=$('wheel-disc');disc.classList.add('dragging');disc.style.transform='rotate('+state.wheelRotation+'deg)';
+      window.requestAnimationFrame(()=>disc.classList.remove('dragging'));
       document.querySelectorAll('.filter').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
-      renderCandidates();
+      renderCandidates(true);
     }));
     $('search').addEventListener('input',e=>{
       if(state.wheelSpinning)return;

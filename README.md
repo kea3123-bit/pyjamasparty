@@ -7,6 +7,7 @@ Laman undian bertema langit malam untuk **Majlis Makan Malam Tahunan SMK Bandar 
 - Animasi bintang berkelip, bintang jatuh, bulan sabit, ilustrasi bantal/selimut dan poster rasmi.
 - **Roda Impian interaktif manual dengan semua nama dalam satu roda**: semua calon aktif hadir sebagai sektor pada roda yang sama. Pengundi menyeret roda sendiri dengan jari atau tetikus; nama penuh pada penunjuk emas dipaparkan dalam panel khusus. Tiada kumpulan, putaran automatik atau pemilihan rawak.
 - **Susun atur berfokus pada roda:** bar kategori dan carian yang ringkas berada di atas, roda besar di tengah (hingga 770px pada desktop), manakala nama pada penunjuk emas, kawalan putaran dan butang Berikan Bintang terletak betul-betul di bawah roda.
+- **Singkatan nama boleh diubah di Google Sheets:** setiap sektor roda memaparkan singkatan daripada lajur E (`SINGKATAN`) tab `CALON`; nama penuh tetap ditunjukkan di bawah roda dan pada pengesahan undian.
 - Pengundi hanya perlu memasukkan **nombor kad pengenalan 12 digit**; pengesahan dibuat menggunakan senarai guru dan AKP pada pelayan.
 - Setiap pengundi memilih **tepat 3 calon berbeza**, dan **hanya satu penghantaran undi** dibenarkan.
 - Papan keputusan **hanya untuk pentadbir** dan menunjukkan 7 calon perempuan serta 3 calon lelaki teratas.
@@ -40,7 +41,7 @@ Google Apps Script hanyalah **backend sambungan Google Sheets**. Ia menyediakan 
 4. Buka **Project Settings → Script properties → Add script property**. Namanya **ADMIN_PASSWORD**, dan nilainya ialah kata laluan pentadbir yang unik, sekurang-kurangnya 12 aksara (16+ disyorkan). **Jangan simpan kata laluan dalam GitHub, HTML atau Google Sheets.**
 5. Klik **Deploy → Manage deployments → Edit (ikon pensel)** untuk deployment URL sedia ada, pilih **New version**. Tetapan Web app: **Execute as: Me (pemilik skrip)** supaya pengundi tidak memerlukan akses terus ke Google Sheets; **Who has access** mesti membenarkan pelawat yang ingin mengundi. **Utamakan akses organisasi sekolah** jika semua menggunakan akaun organisasi kerana hanya nombor KP diperlukan untuk pengesahan. Jika iframe di GitHub Pages gagal memuatkan kerana log masuk Google atau sekatan cookies pihak ketiga, semak semula tetapan capaian dengan mengambil kira risiko penyamaran identiti.
 6. Klik **Deploy**, benarkan kebenaran kepada dua Google Sheets jika diminta. Pilih **Edit deployment sedia ada**, bukan cipta deployment baru, supaya URL /exec tidak berubah.
-7. Buka **GitHub Pages**, tunggu pangkalan data disambungkan. Tab CALON akan terisi automatik dengan **67 individu unik** pada panggilan data pertama. Semak nama/jantina dan status TETAPAN!B2. Anda boleh tukar kepada FALSE sehingga selesai semakan.
+7. Buka **GitHub Pages**, tunggu pangkalan data disambungkan. Tab CALON akan terisi automatik dengan **67 individu unik** pada panggilan data pertama. Semak nama/jantina, singkatan dalam lajur E dan status TETAPAN!B2. Anda boleh tukar kepada FALSE sehingga selesai semakan.
 8. Edarkan **hanya URL GitHub Pages** sebagai laman undian. Pengundi akan kekal di GitHub Pages ketika mengundi dan menyemak pilihan.
 
 Jika mesej **Sambungan pangkalan data belum aktif** masih dipaparkan, periksa bahawa fail Bridge.html wujud, fungsi doGet dalam Code.gs versi terbaru, deployment Web App telah dikemas kini, dan akaun mempunyai akses. GitHub Pages akan menghalang log masuk pengundi sehingga sambungan berjaya.
@@ -49,7 +50,9 @@ Jika mesej **Sambungan pangkalan data belum aktif** masih dipaparkan, periksa ba
 
 **UNDI**: MASA | HASH_PENGUNDI | PILIHAN_ID | STATUS
 
-**CALON**: ID | NAMA_CALON | JANTINA (P/L) | AKTIF (YA/TIDAK)
+**CALON**: ID | NAMA_CALON | JANTINA (P/L) | AKTIF (YA/TIDAK) | **SINGKATAN (boleh ubah)**
+
+Untuk menukar tulisan pada roda, edit sahaja **CALON!E2:E68** atau baris calon berkaitan. Contohnya `MUHAMMAD FARHAN BIN SHOFFI` → `M. FARHAN`, `WAN RAZUHA AYU ...` → `W. RAZUHA`. Jangan ubah ID di lajur A. Singkatan yang ditaip dalam E tidak ditulis semula oleh Apps Script. **Selepas pemasangan awal Code.gs versi ini dan penerbitan semula deployment Apps Script**, perubahan singkatan seterusnya hanya memerlukan edit Sheet dan *refresh* laman undian; tidak perlu edit GitHub atau deploy semula.
 
 **TETAPAN**: voting_open (TRUE/FALSE), max_votes (3), female_winners (7), male_winners (3).
 

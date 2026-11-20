@@ -35,7 +35,7 @@ function doGet(e) {
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
 
-/** Public: exposes only nominee names and gender, never KP. */
+/** Public: exposes nominee names, gender and editable wheel abbreviation, never KP. */
 function getPublicData() {
   const db = ensureDb_();
   const settings = readSettings_(db);
@@ -193,7 +193,11 @@ function ensureDb_() {
     } finally { lock.releaseLock(); }
   }
   if (votes.getLastRow() < 1) votes.appendRow(['MASA','HASH_PENGUNDI','PILIHAN_ID','STATUS']);
-  if (candidates.getLastRow() < 1) candidates.appendRow(['ID','NAMA_CALON','JANTINA','AKTIF']);
+  if (candidates.getLastRow() < 1) candidates.appendRow(['ID','NAMA_CALON','JANTINA','AKTIF','SINGKATAN']);
+  // Column E is editable by the organiser. Never replace existing abbreviations.
+  if (!String(candidates.getRange(1,5).getDisplayValues()[0][0]||'').trim()) {
+    candidates.getRange(1,5).setValue('SINGKATAN');
+  }
   if (settings.getLastRow() < 1) {
     settings.getRange(1,1,5,2).setValues([
       ['TETAPAN','NILAI'],['voting_open','TRUE'],['max_votes','3'],
@@ -214,9 +218,10 @@ function ensureDb_() {
           'C'+sha_('calon:'+p.ic).slice(0,18),
           p.name,
           Number(p.ic.slice(-1))%2 === 0 ? 'P' : 'L',
-          'YA'
+          'YA',
+          shortName_(p.name)
         ]);
-        if (initial.length) candidates.getRange(2,1,initial.length,4).setValues(initial);
+        if (initial.length) candidates.getRange(2,1,initial.length,5).setValues(initial);
         SpreadsheetApp.flush();
       }
     } finally {lock.releaseLock();}
@@ -236,10 +241,26 @@ function readRoster_() {
 function readCandidates_(db) {
   const sheet = db.getSheetByName(APP.CANDIDATES_TAB);
   if (sheet.getLastRow() < 2) return [];
-  return sheet.getRange(2,1,sheet.getLastRow()-1,4).getDisplayValues()
+  return sheet.getRange(2,1,sheet.getLastRow()-1,5).getDisplayValues()
     .filter(row => row[0] && row[1] && ['P','L'].includes(String(row[2]).trim().toUpperCase()) &&
       ['YA','TRUE','1'].includes(String(row[3]).trim().toUpperCase()))
-    .map(row => ({id:String(row[0]),name:String(row[1]),gender:String(row[2]).toUpperCase()}));
+    .map(row => ({
+      id:String(row[0]),
+      name:String(row[1]),
+      gender:String(row[2]).toUpperCase(),
+      shortName:String(row[4]||'').trim() || shortName_(row[1])
+    }));
+}
+
+/** Initial suggestion and blank-cell fallback. The editable CALON!E value wins. */
+function shortName_(fullName) {
+  const tokens = String(fullName||'').toUpperCase().trim().split(/\s+/).filter(Boolean);
+  const stop = tokens.findIndex(t => ['BIN','BINTI','BT','B.','A/P','A/L','AP','AL','ANAK'].includes(t));
+  const given = stop < 0 ? tokens : tokens.slice(0,stop);
+  const first = given[0]||'';
+  const prefixes = ['MUHAMMAD','MUHAMAD','MOHAMAD','MOHAMMAD','MOHD','MD','SITI','NUR','NOR','NOOR','NURUL','WAN','ABDUL','SYED','SHARIFAH','TENGKU','NIK','RAJA','CHE','SRI','FARAH'];
+  if (given.length>1 && prefixes.includes(first)) return first.slice(0,1)+'. '+given[1];
+  return first.length>12 ? first.slice(0,11)+'.' : first;
 }
 
 function readVoteRows_(sheet) {

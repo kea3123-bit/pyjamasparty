@@ -243,12 +243,12 @@
               <div class="wheel-marquee"><span>✦</span> RODA IMPIAN <span>✦</span></div>
               <div class="wheel-frame">
                 <div id="wheel-face" class="wheel-face" aria-label="Roda impian calon bintang malam. Seret menggunakan jari atau tetikus untuk memusingkannya.">
-                  <div id="wheel-disc" class="wheel-disc"><canvas id="vote-wheel" width="700" height="700" role="img" aria-label="Roda nama calon undian"></canvas></div>
+                  <div id="wheel-disc" class="wheel-disc"><canvas id="vote-wheel" width="700" height="700" role="img" aria-label="Roda singkatan nama calon undian"></canvas></div>
                   <div class="wheel-hub" aria-hidden="true">★</div>
                   <div class="wheel-pointer" aria-hidden="true"></div>
                 </div>
               </div>
-              <p class="wheel-footnote">✧ Seret roda dengan jari atau tetikus untuk mencari nama ✧</p>
+              <p class="wheel-footnote">✧ Nama ringkas pada roda · nama penuh pada penunjuk ✧</p>
               <div class="wheel-result-bar">
                 <div class="wheel-result-name">
                   <div class="wheel-stop-label">★ Nama pada penunjuk emas</div>
@@ -360,6 +360,18 @@
     function wheelPool(){
       return state.candidates.filter(c=>state.filter==='all'||c.gender===state.filter);
     }
+    function wheelShortName(c){
+      const saved=String(c.shortName||'').trim();
+      if(saved)return saved;
+      // Fallback when the Apps Script deployment predates CALON!E.
+      const tokens=String(c.name||'').toUpperCase().trim().split(/\s+/).filter(Boolean);
+      const stop=tokens.findIndex(t=>['BIN','BINTI','BT','B.','A/P','A/L','AP','AL','ANAK'].includes(t));
+      const given=stop<0?tokens:tokens.slice(0,stop);
+      const first=given[0]||'';
+      const prefixes=['MUHAMMAD','MUHAMAD','MOHAMAD','MOHAMMAD','MOHD','MD','SITI','NUR','NOR','NOOR','NURUL','WAN','ABDUL','SYED','SHARIFAH','TENGKU','NIK','RAJA','CHE','SRI','FARAH'];
+      if(given.length>1&&prefixes.includes(first))return first[0]+'. '+given[1];
+      return first.length>12?first.slice(0,11)+'.':first;
+    }
     function drawWheel(){
       const canvas=$('vote-wheel'),ctx=canvas.getContext('2d');
       if(!ctx)return;
@@ -383,10 +395,10 @@
         }
         ctx.save();ctx.translate(center,center);ctx.rotate(angle);ctx.translate(radius*(dense?.69:.66),0);
         if(Math.cos(angle)<0)ctx.rotate(Math.PI);
-        const shortName=c.name.trim().split(/\s+/).slice(0,3).join(' ');
+        const shortName=wheelShortName(c);
         ctx.fillStyle='#fff9e7';ctx.textAlign='center';ctx.textBaseline='middle';
         ctx.shadowColor='#080925';ctx.shadowBlur=5;
-        ctx.font='bold '+(dense?18:24)+'px Arial, sans-serif';ctx.fillText(shortName,0,dense?0:-13,dense?210:235);
+        ctx.font='bold '+(dense?19:24)+'px Arial, sans-serif';ctx.fillText(shortName,0,dense?0:-13,dense?205:235);
         if(!dense){ctx.shadowBlur=0;ctx.font='24px Arial, sans-serif';ctx.fillStyle='#ffdf8c';ctx.fillText(c.gender==='P'?'✿':'✦',0,25)}
         ctx.restore();
       });

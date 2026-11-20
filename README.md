@@ -67,7 +67,7 @@ Sekiranya undian seri pada tempat ketujuh atau ketiga, paparan disusun mengikut 
 ## Struktur repo
 
 - **index.html** — pratonton statik GitHub Pages; tidak boleh merekod undian sebenar.
-- **assets/poster.jpg** — poster rasmi yang dibekalkan.
+- **assets/poster-web.jpg** — poster rasmi yang dibekalkan, dioptimumkan untuk laman web.
 - **apps-script/Code.gs** — keselamatan, logik undi, pengesahan serta pangkalan data.
 - **apps-script/Index.html** — laman sebenar yang dijalankan bersama Code.gs.
 

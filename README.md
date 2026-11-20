@@ -5,7 +5,7 @@ Laman undian bertema langit malam untuk **Majlis Makan Malam Tahunan SMK Bandar 
 ## Ciri utama
 
 - Animasi bintang berkelip, bintang jatuh, bulan sabit, ilustrasi bantal/selimut dan poster rasmi.
-- **Roda Impian interaktif manual**: pengundi menyeret roda sendiri dengan jari atau tetikus untuk mencari calon. Penunjuk emas menentukan nama apabila roda berhenti; tekan **Berikan Bintang** untuk memasukkan pilihan. Tiada putaran automatik atau pemilihan rawak.
+- **Roda Impian interaktif manual dengan semua nama dalam satu roda**: semua calon aktif hadir sebagai sektor pada roda yang sama. Pengundi menyeret roda sendiri dengan jari atau tetikus; nama penuh pada penunjuk emas dipaparkan dalam panel khusus. Tiada kumpulan, putaran automatik atau pemilihan rawak.
 - Pengundi hanya perlu memasukkan **nombor kad pengenalan 12 digit**; pengesahan dibuat menggunakan senarai guru dan AKP pada pelayan.
 - Setiap pengundi memilih **tepat 3 calon berbeza**, dan **hanya satu penghantaran undi** dibenarkan.
 - Papan keputusan **hanya untuk pentadbir** dan menunjukkan 7 calon perempuan serta 3 calon lelaki teratas.
@@ -74,10 +74,10 @@ Sekiranya undian seri pada tempat ketujuh atau ketiga, paparan disusun mengikut 
 ## Cara pengundi menggunakan Roda Impian
 
 1. Masukkan nombor kad pengenalan 12 digit untuk mengakses undian.
-2. Cari calon menggunakan kategori **Semua / Perempuan / Lelaki**, kotak carian atau butang **kumpulan sebelumnya / seterusnya**. Carian hanya membawa pengundi ke kumpulan nama dan menyerlahkan nama sepadan; ia tidak memilih calon secara automatik.
+2. Semua nama calon dipaparkan serentak pada roda apabila kategori **Semua** aktif. Kotak carian boleh menyerlahkan nama sepadan pada roda tanpa menukar nama lain atau membuat pilihan automatik.
 3. **Seret roda secara manual** menggunakan jari (telefon) atau tetikus (komputer). Boleh juga gunakan butang **Pusing kiri / Pusing kanan** untuk menggerakkannya satu calon pada satu masa.
 4. Apabila penunjuk emas berhenti pada calon yang dikehendaki, tekan **Berikan Bintang**. Ulang untuk **tiga calon berbeza**; pilihan boleh dibuang sebelum dihantar.
-5. Tekan **Sahkan 3 Pilihan** dan sahkan penghantaran terakhir. Roda memaparkan sehingga lapan calon satu kumpulan untuk memastikan nama boleh dibaca; semua calon aktif boleh dicapai melalui pertukaran kumpulan.
+5. Tekan **Sahkan 3 Pilihan** dan sahkan penghantaran terakhir. Disebabkan roda mengandungi banyak sektor, nama penuh calon yang berada di bawah penunjuk emas dipaparkan dengan huruf besar di sebelah roda. Calon yang telah dipilih kekal dalam roda tetapi tidak boleh menerima bintang kedua daripada pengundi yang sama.
 
 ## Struktur repo
 

@@ -95,10 +95,6 @@
     .wheel-face{touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}.wheel-face.dragging{cursor:grabbing}
     .wheel-disc{transition:transform .42s cubic-bezier(.2,.75,.25,1);will-change:transform;pointer-events:none}.wheel-disc.dragging{transition:none}
     .wheel-frame.spinning .wheel-pointer{animation:pointer-tick .19s ease-in-out infinite alternate}
-    .wheel-group-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:14px;position:relative;z-index:2}
-    .wheel-group-nav button{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;border:1px solid #e6c781;background:#342d66;color:#ffe6ae;font-size:27px;line-height:1}
-    .wheel-group-nav button:disabled{opacity:.3;cursor:not-allowed}
-    .wheel-group-nav span{font-size:13px;color:#fff0c6;font-weight:800;min-width:125px;text-align:center}
     .wheel-footnote{margin:10px 0 2px}
     .wheel-step-controls{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:5px}
     .wheel-step-controls .secondary-button{min-height:46px;border-color:#eacb87;color:#ffe7a4;font-size:14px}
@@ -111,6 +107,10 @@
     .wheel-matches .match-empty{font-size:12px;color:#c7c2df}
     .wheel-status{font-size:14px;font-weight:700;min-height:62px}
     .wheel-status.winner{background:linear-gradient(120deg,#3d3363,#332349);border-color:#ffd879;color:#fff2bb}
+    .wheel-name-count{border:1px solid #ebca7c74;background:#b9923b1b;color:#ffebb8;display:inline-flex;align-items:center;justify-content:center;padding:8px 16px;border-radius:999px;margin-top:16px;font-size:13px;font-weight:800;letter-spacing:.035em;position:relative;z-index:2}
+    .wheel-live-name{border:1px solid #f7d88a;background:radial-gradient(ellipse at 50% 5%,#574478,#302654 80%);border-radius:15px;padding:15px 13px;min-height:76px;display:grid;place-items:center;text-align:center;color:#fff1b1;font:700 clamp(17px,2vw,22px)/1.3 'Fraunces',serif;overflow-wrap:anywhere;box-shadow:inset 0 0 17px #e7b75e19,0 0 13px #e3b56924}
+    .wheel-live-name.already-chosen{border-color:#9994c2;color:#c6c1de;background:#28244d}
+    .wheel-status{font-size:12px;font-weight:500;min-height:48px}
     @keyframes twinkle{to{opacity:1;transform:scale(1.3)}}@keyframes marquee-glint{to{filter:hue-rotate(10deg)}}
     @media(max-width:780px){.wheel-showcase{grid-template-columns:1fr;gap:18px}.wheel-arcade{padding:15px 12px 13px}.wheel-frame{max-width:390px}.wheel-controls{padding:10px 4px 5px}.wheel-controls h4{font-size:29px}.wheel-controls .filters{gap:8px}.wheel-footnote{font-size:11px}}
     @media(max-width:430px){.wheel-marquee{font-size:17px;letter-spacing:.09em}.wheel-frame{max-width:340px}.wheel-arcade{padding:14px 11px 10px}.wheel-pointer{top:-4%;width:13%}.wheel-controls .chip{padding:8px 9px;font-size:11px}.wheel-controls h4{font-size:26px}.wheel-hub{border-width:3px}.wheel-footnote{margin-top:13px}}
@@ -171,30 +171,27 @@
                   <div class="wheel-pointer" aria-hidden="true"></div>
                 </div>
               </div>
-              <div class="wheel-group-nav" aria-label="Tukar kumpulan nama">
-                <button id="group-prev" type="button" aria-label="Kumpulan nama sebelumnya">‹</button>
-                <span id="wheel-group-label">Kumpulan 1</span>
-                <button id="group-next" type="button" aria-label="Kumpulan nama seterusnya">›</button>
-              </div>
-              <p class="wheel-footnote">✧ Seret roda dengan jari atau tetikus ✧</p>
+              <div id="wheel-name-count" class="wheel-name-count">★ Semua nama dalam satu roda ★</div>
+              <p class="wheel-footnote">✧ Seret untuk mencari nama · tiada kumpulan ✧</p>
             </div>
             <div class="wheel-controls">
               <span class="wheel-eyebrow">✧ Giliran anda memilih</span>
               <h4>Pusing sendiri, <em>pilih bintang!</em></h4>
-              <p class="wheel-intro">Seret roda dengan jari atau tetikus sehingga nama calon berada pada penunjuk emas. Nama tidak dipilih secara rawak.</p>
+              <p class="wheel-intro">Semua calon berada pada roda yang sama. Pusing perlahan-lahan untuk membaca nama penuh pada penunjuk emas, kemudian berikan bintang.</p>
               <div class="filters" role="group" aria-label="Tapis calon">
                 <button class="chip filter" data-filter="all" aria-pressed="true" type="button">Semua</button>
                 <button class="chip filter" data-filter="P" aria-pressed="false" type="button">✿ Perempuan</button>
                 <button class="chip filter" data-filter="L" aria-pressed="false" type="button">✦ Lelaki</button>
               </div>
               <label class="wheel-field-label" for="search">Cari nama calon</label>
-              <input id="search" class="field search" type="search" placeholder="Cari untuk lihat kumpulan calon..." autocomplete="off">
+              <input id="search" class="field search" type="search" placeholder="Sorot nama pada roda..." autocomplete="off">
               <div id="search-matches" class="wheel-matches" aria-live="polite"></div>
               <div class="wheel-step-controls" role="group" aria-label="Pusing roda satu nama setiap kali">
                 <button id="nudge-left" class="secondary-button" type="button">↶ Pusing kiri</button>
                 <button id="nudge-right" class="secondary-button" type="button">Pusing kanan ↷</button>
               </div>
               <div class="wheel-stop-label">★ Nama pada penunjuk emas</div>
+              <div id="wheel-live-name" class="wheel-live-name">—</div>
               <div id="wheel-status" class="wheel-status" role="status" aria-live="polite">Pusing roda untuk mencari calon pilihan anda.</div>
               <button id="choose-wheel" type="button" class="secondary-button choose-button" disabled>★ Berikan Bintang</button>
               <div class="chosen-list"><span class="wheel-field-label">Bintang yang sudah dipilih</span><div id="selected-picks" class="chosen-picks"><span class="chosen-empty">Belum ada pilihan. Tiga bintang menanti anda!</span></div></div>
@@ -273,7 +270,7 @@
       document.body.append(frame);
     });
     const $ = id => document.getElementById(id);
-    const state = { candidates:[],selection:[],filter:'all',query:'',wheelGroup:0,wheelEntries:[],wheelRotation:0,wheelSpinning:false,wheelWinner:null,voterToken:null,adminToken:null,config:{maxVotes:3,femaleWinners:7,maleWinners:3,open:true},pending:false };
+    const state = { candidates:[],selection:[],filter:'all',query:'',wheelEntries:[],wheelRotation:0,wheelSpinning:false,wheelWinner:null,voterToken:null,adminToken:null,config:{maxVotes:3,femaleWinners:7,maleWinners:3,open:true},pending:false };
     const escapeHtml = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     function server(fn,...args){
       return bridgeReady.then(()=>new Promise((resolve,reject)=>{
@@ -292,7 +289,7 @@
     document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal:not([hidden])').forEach(m=>closeModal(m.id))});
     ['poster-top','poster-bottom'].forEach(id=>$(id).addEventListener('click',()=>showModal('poster-modal')));
     function wheelPool(){
-      return state.candidates.filter(c=>!state.selection.includes(c.id)&&(state.filter==='all'||c.gender===state.filter));
+      return state.candidates.filter(c=>state.filter==='all'||c.gender===state.filter);
     }
     function drawWheel(){
       const canvas=$('vote-wheel'),ctx=canvas.getContext('2d');
@@ -304,23 +301,24 @@
         ctx.fillStyle='#f3d68d';ctx.font='bold 26px Fraunces, serif';ctx.textAlign='center';ctx.fillText('✦ Tiada calon ✦',center,center-80);return;
       }
       const palette=['#674488','#37518b','#985579','#7255a2','#9d5e66','#365d82','#a06b8b','#55529a'];
+      const dense=entries.length>18;
       const step=Math.PI*2/entries.length;
       entries.forEach((c,i)=>{
         const angle=-Math.PI/2+i*step,start=angle-step/2,end=angle+step/2;
         const grad=ctx.createRadialGradient(center,center,36,center,center,radius);
         grad.addColorStop(0,'#1a1b49');grad.addColorStop(.33,palette[i%palette.length]);grad.addColorStop(1,palette[i%palette.length]);
         ctx.beginPath();ctx.moveTo(center,center);ctx.arc(center,center,radius,start,end);ctx.closePath();
-        ctx.fillStyle=grad;ctx.fill();ctx.lineWidth=5;ctx.strokeStyle='#f5d38d';ctx.stroke();
+        ctx.fillStyle=grad;ctx.fill();ctx.lineWidth=dense?1.6:5;ctx.strokeStyle='#f5d38d';ctx.stroke();
         if(state.query&&c.name.toLocaleLowerCase('ms').includes(state.query)){
           ctx.beginPath();ctx.arc(center,center,radius-21,start+.025,end-.025);ctx.lineWidth=13;ctx.strokeStyle='#ffed9b';ctx.stroke();
         }
-        ctx.save();ctx.translate(center,center);ctx.rotate(angle);ctx.translate(radius*.66,0);
+        ctx.save();ctx.translate(center,center);ctx.rotate(angle);ctx.translate(radius*(dense?.69:.66),0);
         if(Math.cos(angle)<0)ctx.rotate(Math.PI);
         const shortName=c.name.trim().split(/\s+/).slice(0,3).join(' ');
         ctx.fillStyle='#fff9e7';ctx.textAlign='center';ctx.textBaseline='middle';
         ctx.shadowColor='#080925';ctx.shadowBlur=5;
-        ctx.font='bold 24px Arial, sans-serif';ctx.fillText(shortName,0,-13,235);
-        ctx.shadowBlur=0;ctx.font='24px Arial, sans-serif';ctx.fillStyle='#ffdf8c';ctx.fillText(c.gender==='P'?'✿':'✦',0,25);
+        ctx.font='bold '+(dense?18:24)+'px Arial, sans-serif';ctx.fillText(shortName,0,dense?0:-13,dense?210:235);
+        if(!dense){ctx.shadowBlur=0;ctx.font='24px Arial, sans-serif';ctx.fillStyle='#ffdf8c';ctx.fillText(c.gender==='P'?'✿':'✦',0,25)}
         ctx.restore();
       });
       ctx.beginPath();ctx.arc(center,center,radius-7,0,Math.PI*2);ctx.lineWidth=7;ctx.strokeStyle='#ffe3a0';ctx.stroke();
@@ -331,27 +329,39 @@
         ctx.fillStyle=i%2?'#fff0b8':'#ffd06b';ctx.fill();
       }
     }
+    function pointedNominee(){
+      const length=state.wheelEntries.length;
+      if(!length)return null;
+      const sector=Math.round(state.wheelRotation/(360/length));
+      return state.wheelEntries[((-sector%length)+length)%length];
+    }
+    function updatePointerPreview(){
+      const c=pointedNominee(),name=$('wheel-live-name');
+      const label=c?c.name:'Tiada calon pada roda.';
+      if(name.textContent!==label)name.textContent=label;
+      name.classList.toggle('already-chosen',Boolean(c&&state.selection.includes(c.id)));
+    }
     function updateWheelStatus(){
       const atLimit=state.selection.length>=state.config.maxVotes;
       const busy=state.wheelSpinning||state.pending;
+      const alreadyChosen=Boolean(state.wheelWinner&&state.selection.includes(state.wheelWinner.id));
       $('submit-vote').disabled=!atLimit||busy;
-      $('choose-wheel').disabled=!state.wheelWinner||atLimit||busy;
+      $('choose-wheel').disabled=!state.wheelWinner||alreadyChosen||atLimit||busy;
       $('nudge-left').disabled=atLimit||busy||!state.wheelEntries.length;
       $('nudge-right').disabled=atLimit||busy||!state.wheelEntries.length;
       $('search').disabled=atLimit||busy;
       document.querySelectorAll('.filter').forEach(b=>b.disabled=atLimit||busy);
       document.querySelectorAll('.chosen-pick button').forEach(b=>b.disabled=busy);
-      const total=Math.ceil(wheelPool().length/8);
-      $('group-prev').disabled=atLimit||busy||state.wheelGroup<=0;
-      $('group-next').disabled=atLimit||busy||state.wheelGroup>=total-1;
       const status=$('wheel-status');status.classList.toggle('winner',Boolean(state.wheelWinner)&&!busy);
       if(atLimit)status.textContent='🌟 Tiga bintang lengkap! Tekan “Sahkan 3 Pilihan” untuk menghantar undian.';
-      else if(busy)status.textContent='✦ Sedang memusingkan roda... lepaskan pada nama yang anda mahu.';
+      else if(busy)status.textContent='✦ Pusing perlahan-lahan. Nama penuh akan berubah mengikut penunjuk emas.';
+      else if(alreadyChosen)status.textContent='Bintang sudah diberikan kepada calon ini. Pusing lagi untuk memilih orang lain.';
       else if(state.wheelWinner)status.textContent='★ '+state.wheelWinner.name+' — tekan “Berikan Bintang” untuk memilih calon ini.';
       else if(state.query&&!wheelPool().some(c=>c.name.toLocaleLowerCase('ms').includes(state.query)))status.textContent='Nama tidak ditemui. Cuba ejaan lain atau kategori Semua.';
       else status.textContent='↶ Seret roda dengan jari atau tetikus hingga nama pilihan berada pada penunjuk emas. ↷';
+      updatePointerPreview();
     }
-    function renderCandidates(){
+    function renderCandidates(preserveRotation=false){
       const chosen=$('selected-picks');chosen.textContent='';
       if(!state.selection.length){
         const empty=document.createElement('span');empty.className='chosen-empty';empty.textContent='Belum ada pilihan. Tiga bintang menanti anda!';chosen.append(empty);
@@ -368,24 +378,25 @@
       for(let i=1;i<=3;i++){const slot=$('slot-'+i);slot.textContent=i<=state.selection.length?'★':'☆';slot.classList.toggle('filled',i<=state.selection.length)}
       const atLimit=state.selection.length>=state.config.maxVotes;
       $('selection-hint').textContent=atLimit?'Ketiga-tiga bintang sudah dipilih. Sahkan undian anda.':'Pusing roda untuk '+(state.config.maxVotes-state.selection.length)+' lagi calon pilihan anda.';
-      const pool=wheelPool(),total=Math.max(1,Math.ceil(pool.length/8));
-      state.wheelGroup=Math.max(0,Math.min(state.wheelGroup,total-1));
-      state.wheelEntries=pool.slice(state.wheelGroup*8,state.wheelGroup*8+8);
-      $('wheel-group-label').textContent=pool.length?'Kumpulan '+(state.wheelGroup+1)+' / '+total:'Tiada calon';
-      state.wheelWinner=null;state.wheelRotation=0;
-      const disc=$('wheel-disc');disc.classList.add('dragging');disc.style.transform='rotate(0deg)';
-      window.requestAnimationFrame(()=>disc.classList.remove('dragging'));
+      const pool=wheelPool();
+      state.wheelEntries=pool;
+      $('wheel-name-count').textContent=pool.length+' nama dalam satu roda ★';
+      if(!preserveRotation){
+        state.wheelWinner=null;state.wheelRotation=0;
+        const disc=$('wheel-disc');disc.classList.add('dragging');disc.style.transform='rotate(0deg)';
+        window.requestAnimationFrame(()=>{if(!state.wheelSpinning)disc.classList.remove('dragging')});
+      }
       drawWheel();
       const results=$('search-matches');results.textContent='';
       if(state.query){
         const matches=pool.filter(c=>c.name.toLocaleLowerCase('ms').includes(state.query));
         matches.slice(0,5).forEach(c=>{
           const button=document.createElement('button');button.type='button';
-          button.textContent='✦ Lihat pada roda: '+c.name;
+          button.textContent='✦ Sorot pada roda: '+c.name;
           button.addEventListener('click',()=>{
             if(state.wheelSpinning)return;
-            state.wheelGroup=Math.floor(pool.findIndex(x=>x.id===c.id)/8);
-            renderCandidates();
+            state.query=c.name.toLocaleLowerCase('ms');$('search').value=c.name;
+            renderCandidates(true);
           });
           results.append(button);
         });
@@ -400,24 +411,20 @@
       if(index>=0)state.selection.splice(index,1);
       else if(state.selection.length<state.config.maxVotes)state.selection.push(id);
       else{error('vote-error','Anda hanya boleh memilih tiga orang calon. Buang satu pilihan dahulu.');return}
-      state.query='';$('search').value='';state.wheelGroup=0;
+      state.query='';$('search').value='';
       error('vote-error','');renderCandidates();
     }
     document.querySelectorAll('.filter').forEach(b=>b.addEventListener('click',()=>{
       if(state.wheelSpinning)return;
-      state.filter=b.dataset.filter;state.query='';$('search').value='';state.wheelGroup=0;
+      state.filter=b.dataset.filter;state.query='';$('search').value='';
       document.querySelectorAll('.filter').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
       renderCandidates();
     }));
     $('search').addEventListener('input',e=>{
       if(state.wheelSpinning)return;
       state.query=e.target.value.toLocaleLowerCase('ms').trim();
-      const pool=wheelPool(),index=pool.findIndex(c=>c.name.toLocaleLowerCase('ms').includes(state.query));
-      if(state.query&&index>=0)state.wheelGroup=Math.floor(index/8);
-      renderCandidates();
+      renderCandidates(true);
     });
-    $('group-prev').addEventListener('click',()=>{if(state.wheelSpinning||state.wheelGroup===0)return;state.wheelGroup--;renderCandidates()});
-    $('group-next').addEventListener('click',()=>{if(state.wheelSpinning||state.wheelGroup>=Math.ceil(wheelPool().length/8)-1)return;state.wheelGroup++;renderCandidates()});
     let wheelSnapTimer=null,wheelDrag=null;
     function finishWheelTurn(){
       const length=state.wheelEntries.length;
@@ -462,6 +469,7 @@
       wheelDrag.last=pointerAngle(e);wheelDrag.movement+=Math.abs(delta);
       state.wheelRotation+=delta;
       $('wheel-disc').style.transform='rotate('+state.wheelRotation+'deg)';
+      updatePointerPreview();
     });
     function endWheelDrag(e){
       if(!wheelDrag||wheelDrag.id!==e.pointerId)return;

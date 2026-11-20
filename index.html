@@ -92,6 +92,25 @@
     .choose-button{width:100%;min-height:43px;border-color:#e5c87d;color:#fff0bd;font-size:14px}.choose-button:disabled{opacity:.45;cursor:not-allowed}
     .chosen-list{margin-top:auto;padding-top:13px;border-top:1px solid #ded2ef24}.chosen-list .wheel-field-label{color:#f6d78a;margin:0 0 9px}.chosen-picks{display:grid;gap:7px}.chosen-empty{font-size:12px;color:#b1b9d9;font-style:italic;padding:6px 0}.chosen-pick{display:flex;align-items:center;gap:9px;justify-content:space-between;padding:10px 11px;background:#302c64;border:1px solid #e7c47b6a;border-radius:12px;font-size:12px;font-weight:750}.chosen-pick span{min-width:0;line-height:1.4}.chosen-pick button{flex-shrink:0;color:#fce4ae;background:#12183b;border:1px solid #b5a4cc66;border-radius:50%;width:25px;height:25px;display:grid;place-items:center;font-size:15px}.chosen-pick button:hover{background:#734760}
     .wheel-showcase [hidden]{display:none!important}
+    .wheel-face{touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}.wheel-face.dragging{cursor:grabbing}
+    .wheel-disc{transition:transform .42s cubic-bezier(.2,.75,.25,1);will-change:transform;pointer-events:none}.wheel-disc.dragging{transition:none}
+    .wheel-frame.spinning .wheel-pointer{animation:pointer-tick .19s ease-in-out infinite alternate}
+    .wheel-group-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:14px;position:relative;z-index:2}
+    .wheel-group-nav button{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;border:1px solid #e6c781;background:#342d66;color:#ffe6ae;font-size:27px;line-height:1}
+    .wheel-group-nav button:disabled{opacity:.3;cursor:not-allowed}
+    .wheel-group-nav span{font-size:13px;color:#fff0c6;font-weight:800;min-width:125px;text-align:center}
+    .wheel-footnote{margin:10px 0 2px}
+    .wheel-step-controls{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:5px}
+    .wheel-step-controls .secondary-button{min-height:46px;border-color:#eacb87;color:#ffe7a4;font-size:14px}
+    .wheel-step-controls .secondary-button:disabled{opacity:.35;cursor:not-allowed}
+    .wheel-stop-label{color:#e8c97e;text-transform:uppercase;letter-spacing:.1em;font-size:11px;font-weight:800;text-align:center;margin-top:4px}
+    .wheel-matches{display:grid;gap:5px;max-height:143px;overflow-y:auto}
+    .wheel-matches:empty{display:none}
+    .wheel-matches button{border:1px solid #a39cce70;background:#202757;border-radius:10px;text-align:left;color:#f2e8ff;padding:8px 10px;font-size:12px;line-height:1.35}
+    .wheel-matches button:hover{border-color:#efd17c;background:#303267}
+    .wheel-matches .match-empty{font-size:12px;color:#c7c2df}
+    .wheel-status{font-size:14px;font-weight:700;min-height:62px}
+    .wheel-status.winner{background:linear-gradient(120deg,#3d3363,#332349);border-color:#ffd879;color:#fff2bb}
     @keyframes twinkle{to{opacity:1;transform:scale(1.3)}}@keyframes marquee-glint{to{filter:hue-rotate(10deg)}}
     @media(max-width:780px){.wheel-showcase{grid-template-columns:1fr;gap:18px}.wheel-arcade{padding:15px 12px 13px}.wheel-frame{max-width:390px}.wheel-controls{padding:10px 4px 5px}.wheel-controls h4{font-size:29px}.wheel-controls .filters{gap:8px}.wheel-footnote{font-size:11px}}
     @media(max-width:430px){.wheel-marquee{font-size:17px;letter-spacing:.09em}.wheel-frame{max-width:340px}.wheel-arcade{padding:14px 11px 10px}.wheel-pointer{top:-4%;width:13%}.wheel-controls .chip{padding:8px 9px;font-size:11px}.wheel-controls h4{font-size:26px}.wheel-hub{border-width:3px}.wheel-footnote{margin-top:13px}}
@@ -146,29 +165,37 @@
             <div class="wheel-arcade">
               <div class="wheel-marquee"><span>✦</span> RODA IMPIAN <span>✦</span></div>
               <div class="wheel-frame">
-                <div class="wheel-face" aria-label="Roda impian calon bintang malam">
+                <div id="wheel-face" class="wheel-face" aria-label="Roda impian calon bintang malam. Seret menggunakan jari atau tetikus untuk memusingkannya.">
                   <div id="wheel-disc" class="wheel-disc"><canvas id="vote-wheel" width="700" height="700" role="img" aria-label="Roda nama calon undian"></canvas></div>
                   <div class="wheel-hub" aria-hidden="true">★</div>
                   <div class="wheel-pointer" aria-hidden="true"></div>
                 </div>
               </div>
-              <p class="wheel-footnote">✧ Pilih nama → putar roda → beri bintang ✧</p>
+              <div class="wheel-group-nav" aria-label="Tukar kumpulan nama">
+                <button id="group-prev" type="button" aria-label="Kumpulan nama sebelumnya">‹</button>
+                <span id="wheel-group-label">Kumpulan 1</span>
+                <button id="group-next" type="button" aria-label="Kumpulan nama seterusnya">›</button>
+              </div>
+              <p class="wheel-footnote">✧ Seret roda dengan jari atau tetikus ✧</p>
             </div>
             <div class="wheel-controls">
               <span class="wheel-eyebrow">✧ Giliran anda memilih</span>
-              <h4>Putarkan <em>takdir bintang!</em></h4>
-              <p class="wheel-intro">Cari calon kegemaran anda, kemudian putarkan roda hingga namanya muncul di penunjuk emas.</p>
+              <h4>Pusing sendiri, <em>pilih bintang!</em></h4>
+              <p class="wheel-intro">Seret roda dengan jari atau tetikus sehingga nama calon berada pada penunjuk emas. Nama tidak dipilih secara rawak.</p>
               <div class="filters" role="group" aria-label="Tapis calon">
                 <button class="chip filter" data-filter="all" aria-pressed="true" type="button">Semua</button>
                 <button class="chip filter" data-filter="P" aria-pressed="false" type="button">✿ Perempuan</button>
                 <button class="chip filter" data-filter="L" aria-pressed="false" type="button">✦ Lelaki</button>
               </div>
               <label class="wheel-field-label" for="search">Cari nama calon</label>
-              <input id="search" class="field search" type="search" placeholder="Taip nama guru atau AKP..." autocomplete="off">
-              <label class="wheel-field-label" for="candidate-select">Nama pilihan anda</label>
-              <select id="candidate-select" class="field wheel-select"><option value="">— Pilih calon dahulu —</option></select>
-              <button id="spin-wheel" type="button" class="cta spin-button" disabled><span aria-hidden="true">✦</span> PUTARKAN RODA!</button>
-              <div id="wheel-status" class="wheel-status" role="status" aria-live="polite">Pilih nama calon untuk memulakan putaran.</div>
+              <input id="search" class="field search" type="search" placeholder="Cari untuk lihat kumpulan calon..." autocomplete="off">
+              <div id="search-matches" class="wheel-matches" aria-live="polite"></div>
+              <div class="wheel-step-controls" role="group" aria-label="Pusing roda satu nama setiap kali">
+                <button id="nudge-left" class="secondary-button" type="button">↶ Pusing kiri</button>
+                <button id="nudge-right" class="secondary-button" type="button">Pusing kanan ↷</button>
+              </div>
+              <div class="wheel-stop-label">★ Nama pada penunjuk emas</div>
+              <div id="wheel-status" class="wheel-status" role="status" aria-live="polite">Pusing roda untuk mencari calon pilihan anda.</div>
               <button id="choose-wheel" type="button" class="secondary-button choose-button" disabled>★ Berikan Bintang</button>
               <div class="chosen-list"><span class="wheel-field-label">Bintang yang sudah dipilih</span><div id="selected-picks" class="chosen-picks"><span class="chosen-empty">Belum ada pilihan. Tiga bintang menanti anda!</span></div></div>
             </div>
@@ -246,7 +273,7 @@
       document.body.append(frame);
     });
     const $ = id => document.getElementById(id);
-    const state = { candidates:[],selection:[],filter:'all',query:'',targetId:'',wheelEntries:[],wheelRotation:0,wheelSpinning:false,wheelWinner:null,voterToken:null,adminToken:null,config:{maxVotes:3,femaleWinners:7,maleWinners:3,open:true},pending:false };
+    const state = { candidates:[],selection:[],filter:'all',query:'',wheelGroup:0,wheelEntries:[],wheelRotation:0,wheelSpinning:false,wheelWinner:null,voterToken:null,adminToken:null,config:{maxVotes:3,femaleWinners:7,maleWinners:3,open:true},pending:false };
     const escapeHtml = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     function server(fn,...args){
       return bridgeReady.then(()=>new Promise((resolve,reject)=>{
@@ -274,7 +301,7 @@
       ctx.clearRect(0,0,size,size);
       if(!entries.length){
         ctx.fillStyle='#252856';ctx.beginPath();ctx.arc(center,center,radius,0,Math.PI*2);ctx.fill();
-        ctx.fillStyle='#f3d68d';ctx.font='bold 26px Fraunces, serif';ctx.textAlign='center';ctx.fillText('✦ Pilih calon ✦',center,center-80);return;
+        ctx.fillStyle='#f3d68d';ctx.font='bold 26px Fraunces, serif';ctx.textAlign='center';ctx.fillText('✦ Tiada calon ✦',center,center-80);return;
       }
       const palette=['#674488','#37518b','#985579','#7255a2','#9d5e66','#365d82','#a06b8b','#55529a'];
       const step=Math.PI*2/entries.length;
@@ -284,6 +311,9 @@
         grad.addColorStop(0,'#1a1b49');grad.addColorStop(.33,palette[i%palette.length]);grad.addColorStop(1,palette[i%palette.length]);
         ctx.beginPath();ctx.moveTo(center,center);ctx.arc(center,center,radius,start,end);ctx.closePath();
         ctx.fillStyle=grad;ctx.fill();ctx.lineWidth=5;ctx.strokeStyle='#f5d38d';ctx.stroke();
+        if(state.query&&c.name.toLocaleLowerCase('ms').includes(state.query)){
+          ctx.beginPath();ctx.arc(center,center,radius-21,start+.025,end-.025);ctx.lineWidth=13;ctx.strokeStyle='#ffed9b';ctx.stroke();
+        }
         ctx.save();ctx.translate(center,center);ctx.rotate(angle);ctx.translate(radius*.66,0);
         if(Math.cos(angle)<0)ctx.rotate(Math.PI);
         const shortName=c.name.trim().split(/\s+/).slice(0,3).join(' ');
@@ -301,6 +331,26 @@
         ctx.fillStyle=i%2?'#fff0b8':'#ffd06b';ctx.fill();
       }
     }
+    function updateWheelStatus(){
+      const atLimit=state.selection.length>=state.config.maxVotes;
+      const busy=state.wheelSpinning||state.pending;
+      $('submit-vote').disabled=!atLimit||busy;
+      $('choose-wheel').disabled=!state.wheelWinner||atLimit||busy;
+      $('nudge-left').disabled=atLimit||busy||!state.wheelEntries.length;
+      $('nudge-right').disabled=atLimit||busy||!state.wheelEntries.length;
+      $('search').disabled=atLimit||busy;
+      document.querySelectorAll('.filter').forEach(b=>b.disabled=atLimit||busy);
+      document.querySelectorAll('.chosen-pick button').forEach(b=>b.disabled=busy);
+      const total=Math.ceil(wheelPool().length/8);
+      $('group-prev').disabled=atLimit||busy||state.wheelGroup<=0;
+      $('group-next').disabled=atLimit||busy||state.wheelGroup>=total-1;
+      const status=$('wheel-status');status.classList.toggle('winner',Boolean(state.wheelWinner)&&!busy);
+      if(atLimit)status.textContent='🌟 Tiga bintang lengkap! Tekan “Sahkan 3 Pilihan” untuk menghantar undian.';
+      else if(busy)status.textContent='✦ Sedang memusingkan roda... lepaskan pada nama yang anda mahu.';
+      else if(state.wheelWinner)status.textContent='★ '+state.wheelWinner.name+' — tekan “Berikan Bintang” untuk memilih calon ini.';
+      else if(state.query&&!wheelPool().some(c=>c.name.toLocaleLowerCase('ms').includes(state.query)))status.textContent='Nama tidak ditemui. Cuba ejaan lain atau kategori Semua.';
+      else status.textContent='↶ Seret roda dengan jari atau tetikus hingga nama pilihan berada pada penunjuk emas. ↷';
+    }
     function renderCandidates(){
       const chosen=$('selected-picks');chosen.textContent='';
       if(!state.selection.length){
@@ -312,35 +362,37 @@
         const item=document.createElement('div');item.className='chosen-pick';
         const name=document.createElement('span');name.textContent=(i+1)+'. ★ '+c.name;
         const remove=document.createElement('button');remove.type='button';remove.textContent='×';remove.setAttribute('aria-label','Buang pilihan '+c.name);
-        remove.disabled=state.wheelSpinning||state.pending;remove.addEventListener('click',()=>pick(id));item.append(name,remove);chosen.append(item);
+        remove.addEventListener('click',()=>pick(id));item.append(name,remove);chosen.append(item);
       });
       $('selection-count').textContent=state.selection.length+' daripada '+state.config.maxVotes;
       for(let i=1;i<=3;i++){const slot=$('slot-'+i);slot.textContent=i<=state.selection.length?'★':'☆';slot.classList.toggle('filled',i<=state.selection.length)}
-      const atLimit=state.selection.length===state.config.maxVotes;
-      $('submit-vote').disabled=!atLimit||state.wheelSpinning||state.pending;
-      $('selection-hint').textContent=atLimit?'Ketiga-tiga bintang sudah dipilih. Sahkan undian anda.':'Putarkan roda untuk '+(state.config.maxVotes-state.selection.length)+' lagi calon pilihan anda.';
-      const pool=wheelPool();
-      const matching=pool.filter(c=>c.name.toLocaleLowerCase('ms').includes(state.query));
-      const select=$('candidate-select');select.textContent='';
-      const placeholder=document.createElement('option');placeholder.value='';placeholder.textContent=matching.length?'— Pilih calon dahulu —':'— Tiada calon ditemui —';select.append(placeholder);
-      matching.forEach(c=>{const option=document.createElement('option');option.value=c.id;option.textContent=c.name+' · '+(c.gender==='P'?'Perempuan':'Lelaki');select.append(option)});
-      if(!matching.some(c=>c.id===state.targetId))state.targetId='';
-      select.value=state.targetId;
-      const focusIndex=Math.max(0,pool.findIndex(c=>c.id===state.targetId));
-      const start=Math.max(0,Math.min(pool.length-8,focusIndex-3));
-      state.wheelEntries=pool.slice(start,start+8);
+      const atLimit=state.selection.length>=state.config.maxVotes;
+      $('selection-hint').textContent=atLimit?'Ketiga-tiga bintang sudah dipilih. Sahkan undian anda.':'Pusing roda untuk '+(state.config.maxVotes-state.selection.length)+' lagi calon pilihan anda.';
+      const pool=wheelPool(),total=Math.max(1,Math.ceil(pool.length/8));
+      state.wheelGroup=Math.max(0,Math.min(state.wheelGroup,total-1));
+      state.wheelEntries=pool.slice(state.wheelGroup*8,state.wheelGroup*8+8);
+      $('wheel-group-label').textContent=pool.length?'Kumpulan '+(state.wheelGroup+1)+' / '+total:'Tiada calon';
+      state.wheelWinner=null;state.wheelRotation=0;
+      const disc=$('wheel-disc');disc.classList.add('dragging');disc.style.transform='rotate(0deg)';
+      window.requestAnimationFrame(()=>disc.classList.remove('dragging'));
       drawWheel();
-      select.disabled=atLimit||state.wheelSpinning;
-      $('search').disabled=atLimit||state.wheelSpinning;
-      document.querySelectorAll('.filter').forEach(b=>b.disabled=atLimit||state.wheelSpinning);
-      $('spin-wheel').disabled=!state.targetId||atLimit||state.wheelSpinning;
-      $('choose-wheel').disabled=!state.wheelWinner||atLimit||state.wheelSpinning;
-      const status=$('wheel-status');status.classList.toggle('winner',Boolean(state.wheelWinner));
-      if(atLimit)status.textContent='🌟 Tiga bintang sudah lengkap! Tekan “Sahkan 3 Pilihan” untuk menghantar undian.';
-      else if(state.wheelWinner)status.textContent='★ Roda berhenti pada '+state.wheelWinner.name+'! Tekan “Berikan Bintang”.';
-      else if(!matching.length)status.textContent='Tiada calon ditemui. Cuba nama atau kategori lain.';
-      else if(state.targetId)status.textContent='Bersedia! Tekan “Putarkan Roda” untuk '+matching.find(c=>c.id===state.targetId).name+'.';
-      else status.textContent='Pilih nama calon untuk memulakan putaran.';
+      const results=$('search-matches');results.textContent='';
+      if(state.query){
+        const matches=pool.filter(c=>c.name.toLocaleLowerCase('ms').includes(state.query));
+        matches.slice(0,5).forEach(c=>{
+          const button=document.createElement('button');button.type='button';
+          button.textContent='✦ Lihat pada roda: '+c.name;
+          button.addEventListener('click',()=>{
+            if(state.wheelSpinning)return;
+            state.wheelGroup=Math.floor(pool.findIndex(x=>x.id===c.id)/8);
+            renderCandidates();
+          });
+          results.append(button);
+        });
+        if(!matches.length){const empty=document.createElement('span');empty.className='match-empty';empty.textContent='Tiada nama sepadan.';results.append(empty)}
+        else if(matches.length>5){const more=document.createElement('span');more.className='match-empty';more.textContent='+'+(matches.length-5)+' lagi nama sepadan';results.append(more)}
+      }
+      updateWheelStatus();
     }
     function pick(id){
       if(state.pending||state.wheelSpinning)return;
@@ -348,56 +400,87 @@
       if(index>=0)state.selection.splice(index,1);
       else if(state.selection.length<state.config.maxVotes)state.selection.push(id);
       else{error('vote-error','Anda hanya boleh memilih tiga orang calon. Buang satu pilihan dahulu.');return}
-      state.targetId='';state.wheelWinner=null;error('vote-error','');renderCandidates();
+      state.query='';$('search').value='';state.wheelGroup=0;
+      error('vote-error','');renderCandidates();
     }
     document.querySelectorAll('.filter').forEach(b=>b.addEventListener('click',()=>{
       if(state.wheelSpinning)return;
-      state.filter=b.dataset.filter;state.wheelWinner=null;
+      state.filter=b.dataset.filter;state.query='';$('search').value='';state.wheelGroup=0;
       document.querySelectorAll('.filter').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
       renderCandidates();
     }));
     $('search').addEventListener('input',e=>{
       if(state.wheelSpinning)return;
-      state.query=e.target.value.toLocaleLowerCase('ms').trim();state.wheelWinner=null;renderCandidates();
+      state.query=e.target.value.toLocaleLowerCase('ms').trim();
+      const pool=wheelPool(),index=pool.findIndex(c=>c.name.toLocaleLowerCase('ms').includes(state.query));
+      if(state.query&&index>=0)state.wheelGroup=Math.floor(index/8);
+      renderCandidates();
     });
-    $('candidate-select').addEventListener('change',e=>{
-      if(state.wheelSpinning)return;
-      state.targetId=e.target.value;state.wheelWinner=null;renderCandidates();
-    });
-    $('spin-wheel').addEventListener('click',()=>{
-      if(!state.targetId||state.wheelSpinning||state.pending||state.selection.length>=state.config.maxVotes)return;
-      const target=state.candidates.find(c=>c.id===state.targetId);
-      const index=state.wheelEntries.findIndex(c=>c.id===state.targetId);
-      if(!target||index<0)return;
-      state.wheelSpinning=true;state.wheelWinner=null;
-      $('spin-wheel').disabled=true;$('choose-wheel').disabled=true;$('candidate-select').disabled=true;$('search').disabled=true;
-      document.querySelectorAll('.filter').forEach(b=>b.disabled=true);
-      document.querySelectorAll('.chosen-pick button').forEach(b=>b.disabled=true);
-      $('submit-vote').disabled=true;
-      $('wheel-status').classList.remove('winner');$('wheel-status').textContent='✦ Roda sedang berputar... siapakah bintang anda?';
-      $('wheel-frame').classList.add('spinning');
-      const step=360/state.wheelEntries.length;
-      const desired=((360-index*step)%360+360)%360;
-      const current=((state.wheelRotation%360)+360)%360;
-      const delta=(desired-current+360)%360;
-      state.wheelRotation+=(5+Math.floor(Math.random()*3))*360+delta;
+    $('group-prev').addEventListener('click',()=>{if(state.wheelSpinning||state.wheelGroup===0)return;state.wheelGroup--;renderCandidates()});
+    $('group-next').addEventListener('click',()=>{if(state.wheelSpinning||state.wheelGroup>=Math.ceil(wheelPool().length/8)-1)return;state.wheelGroup++;renderCandidates()});
+    let wheelSnapTimer=null,wheelDrag=null;
+    function finishWheelTurn(){
+      const length=state.wheelEntries.length;
+      if(!length)return;
+      const step=360/length,sector=Math.round(state.wheelRotation/step);
+      state.wheelRotation=sector*step;
+      const chosen=state.wheelEntries[((-sector%length)+length)%length];
+      $('wheel-disc').classList.remove('dragging');
       $('wheel-disc').style.transform='rotate('+state.wheelRotation+'deg)';
+      state.wheelSpinning=true;state.wheelWinner=null;updateWheelStatus();
+      window.clearTimeout(wheelSnapTimer);
       const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      window.setTimeout(()=>{
-        state.wheelSpinning=false;state.wheelWinner=target;
-        $('wheel-frame').classList.remove('spinning');
-        $('candidate-select').disabled=false;$('search').disabled=false;
-        document.querySelectorAll('.filter').forEach(b=>b.disabled=false);
-        document.querySelectorAll('.chosen-pick button').forEach(b=>b.disabled=false);
-        $('spin-wheel').disabled=false;$('choose-wheel').disabled=false;
-        $('wheel-status').classList.add('winner');
-        $('wheel-status').textContent='★ Tahniah! Roda berhenti pada '+target.name+'. Tekan “Berikan Bintang” untuk memilihnya.';
-      },reduced?30:5400);
+      wheelSnapTimer=window.setTimeout(()=>{
+        state.wheelSpinning=false;state.wheelWinner=chosen;updateWheelStatus();
+      },reduced?30:470);
+    }
+    function nudgeWheel(direction){
+      if(state.wheelSpinning||state.pending||state.selection.length>=state.config.maxVotes||!state.wheelEntries.length)return;
+      state.wheelRotation+=direction*360/state.wheelEntries.length;
+      finishWheelTurn();
+    }
+    $('nudge-left').addEventListener('click',()=>nudgeWheel(-1));
+    $('nudge-right').addEventListener('click',()=>nudgeWheel(1));
+    function pointerAngle(e){
+      const rect=$('wheel-face').getBoundingClientRect();
+      return Math.atan2(e.clientY-rect.top-rect.height/2,e.clientX-rect.left-rect.width/2)*180/Math.PI;
+    }
+    const wheelFace=$('wheel-face');
+    wheelFace.addEventListener('pointerdown',e=>{
+      if((e.pointerType==='mouse'&&e.button!==0)||state.wheelSpinning||state.pending||state.selection.length>=state.config.maxVotes||!state.wheelEntries.length)return;
+      e.preventDefault();
+      wheelDrag={id:e.pointerId,last:pointerAngle(e),start:state.wheelRotation,movement:0,previous:state.wheelWinner};
+      wheelFace.setPointerCapture(e.pointerId);
+      $('wheel-disc').classList.add('dragging');wheelFace.classList.add('dragging');
+      state.wheelWinner=null;state.wheelSpinning=true;updateWheelStatus();
     });
+    wheelFace.addEventListener('pointermove',e=>{
+      if(!wheelDrag||wheelDrag.id!==e.pointerId)return;
+      let delta=pointerAngle(e)-wheelDrag.last;
+      if(delta>180)delta-=360;
+      if(delta< -180)delta+=360;
+      wheelDrag.last=pointerAngle(e);wheelDrag.movement+=Math.abs(delta);
+      state.wheelRotation+=delta;
+      $('wheel-disc').style.transform='rotate('+state.wheelRotation+'deg)';
+    });
+    function endWheelDrag(e){
+      if(!wheelDrag||wheelDrag.id!==e.pointerId)return;
+      const drag=wheelDrag;wheelDrag=null;
+      if(wheelFace.hasPointerCapture(e.pointerId))wheelFace.releasePointerCapture(e.pointerId);
+      wheelFace.classList.remove('dragging');
+      if(e.type==='pointercancel'||drag.movement<3){
+        state.wheelRotation=drag.start;state.wheelWinner=drag.previous;state.wheelSpinning=false;
+        $('wheel-disc').classList.remove('dragging');
+        $('wheel-disc').style.transform='rotate('+state.wheelRotation+'deg)';
+        updateWheelStatus();return;
+      }
+      finishWheelTurn();
+    }
+    wheelFace.addEventListener('pointerup',endWheelDrag);
+    wheelFace.addEventListener('pointercancel',endWheelDrag);
     $('choose-wheel').addEventListener('click',()=>{
       if(!state.wheelWinner||state.wheelSpinning)return;
-      const id=state.wheelWinner.id;
-      pick(id);
+      pick(state.wheelWinner.id);
     });
     $('login-form').addEventListener('submit',async e=>{
       e.preventDefault();if(state.pending)return;

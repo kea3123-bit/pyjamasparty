@@ -6,6 +6,7 @@ Laman undian bertema langit malam untuk **Majlis Makan Malam Tahunan SMK Bandar 
 
 - Animasi bintang berkelip, bintang jatuh, bulan sabit, ilustrasi bantal/selimut dan poster rasmi.
 - **Roda Impian interaktif manual dengan semua nama dalam satu roda**: semua calon aktif hadir sebagai sektor pada roda yang sama. Pengundi menyeret roda sendiri dengan jari atau tetikus; nama penuh pada penunjuk emas dipaparkan dalam panel khusus. Tiada kumpulan, putaran automatik atau pemilihan rawak.
+- **Susun atur berfokus pada roda:** bar kategori dan carian yang ringkas berada di atas, roda besar di tengah (hingga 770px pada desktop), manakala nama pada penunjuk emas, kawalan putaran dan butang Berikan Bintang terletak betul-betul di bawah roda.
 - Pengundi hanya perlu memasukkan **nombor kad pengenalan 12 digit**; pengesahan dibuat menggunakan senarai guru dan AKP pada pelayan.
 - Setiap pengundi memilih **tepat 3 calon berbeza**, dan **hanya satu penghantaran undi** dibenarkan.
 - Papan keputusan **hanya untuk pentadbir** dan menunjukkan 7 calon perempuan serta 3 calon lelaki teratas.

@@ -111,6 +111,68 @@
     .wheel-live-name{border:1px solid #f7d88a;background:radial-gradient(ellipse at 50% 5%,#574478,#302654 80%);border-radius:15px;padding:15px 13px;min-height:76px;display:grid;place-items:center;text-align:center;color:#fff1b1;font:700 clamp(17px,2vw,22px)/1.3 'Fraunces',serif;overflow-wrap:anywhere;box-shadow:inset 0 0 17px #e7b75e19,0 0 13px #e3b56924}
     .wheel-live-name.already-chosen{border-color:#9994c2;color:#c6c1de;background:#28244d}
     .wheel-status{font-size:12px;font-weight:500;min-height:48px}
+    /* Wider game-show layout: compact tools above one large wheel. */
+    #mengundi.stage{max-width:1140px}
+    .wheel-showcase{display:flex;flex-direction:column;gap:17px;margin-top:21px}
+    .wheel-controls{display:flex;flex-direction:column;gap:15px;padding:21px 24px;border-radius:22px;background:linear-gradient(115deg,#1c2253,#151a43);border:1px solid #d4be7861;box-shadow:inset 0 1px #ffffff12}
+    .wheel-toolbar-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .wheel-toolbar-heading h4{font-size:clamp(23px,2.7vw,30px);margin:6px 0 0;line-height:1.15}
+    .wheel-toolbar-heading .wheel-name-count{margin:0;flex-shrink:0;white-space:nowrap}
+    .wheel-toolbar-fields{display:grid;grid-template-columns:max-content minmax(240px,1fr);gap:24px;align-items:end}
+    .wheel-controls .filters{margin:0;gap:8px;align-self:end}
+    .wheel-controls .chip{font-size:13px;padding:11px 14px}
+    .wheel-search-wrap{min-width:0}
+    .wheel-search-wrap .wheel-field-label{font-size:13px;margin:0 0 7px}
+    .wheel-search-wrap .search{width:100%;max-width:none;margin:0;min-height:46px}
+    .wheel-matches{grid-template-columns:repeat(2,minmax(0,1fr));max-height:124px;gap:7px}
+    .wheel-arcade{padding:21px 25px 25px;min-width:0;border-radius:28px}
+    .wheel-marquee{font-size:clamp(22px,3.3vw,36px);margin:8px 0 10px}
+    .wheel-frame{max-width:770px;width:100%;margin:6px auto 0}
+    .wheel-footnote{font-size:13px;margin:17px 0 3px}
+    .wheel-result-bar{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);align-items:end;gap:16px;width:min(100%,900px);margin:19px auto 0}
+    .wheel-result-name{min-width:0}
+    .wheel-result-name .wheel-stop-label{text-align:left;margin:0 0 7px;font-size:12px}
+    .wheel-live-name{min-height:104px;font-size:clamp(19px,2.5vw,26px);padding:16px 20px}
+    .wheel-result-actions{display:flex;flex-direction:column;gap:8px;min-width:0}
+    .wheel-step-controls{margin:0;gap:8px}
+    .wheel-step-controls .secondary-button{font-size:13px;min-height:44px}
+    .choose-button{min-height:52px;font-size:15px;background:linear-gradient(115deg,#fff0bd,#e9b85e);border-color:#ffdc89;color:#27203e;font-weight:900}
+    .choose-button:hover:not(:disabled){background:linear-gradient(115deg,#fff5d2,#ffd67c)}
+    .choose-button:disabled{background:#242954;color:#9693bf;border-color:#686b95}
+    .wheel-status{margin:10px auto 0;width:min(100%,900px);border:0;background:transparent;min-height:24px;padding:4px 7px;font-size:13px}
+    .wheel-status.winner{background:transparent;border:0;box-shadow:none;color:#ffe4a1}
+    .chosen-list{margin:0;padding:16px 21px;border:1px solid #9e91c758;border-radius:18px;background:#11183e9e}
+    .chosen-list .wheel-field-label{font-size:13px;margin:0 0 9px}
+    .chosen-picks{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    .chosen-pick{min-height:56px}
+    @media(max-width:780px){
+      .wheel-controls{padding:17px 16px;gap:14px}
+      .wheel-toolbar-heading{align-items:flex-start;flex-wrap:wrap}
+      .wheel-toolbar-heading h4{font-size:25px}
+      .wheel-toolbar-heading .wheel-name-count{font-size:12px}
+      .wheel-toolbar-fields{grid-template-columns:1fr;gap:13px}
+      .wheel-controls .filters{gap:6px;flex-wrap:nowrap}
+      .wheel-controls .chip{font-size:12px;flex:1;padding:9px 6px}
+      .wheel-matches{grid-template-columns:1fr}
+      .wheel-arcade{padding:17px 12px 18px}
+      .wheel-marquee{font-size:23px}
+      .wheel-frame{max-width:560px}
+      .wheel-result-bar{grid-template-columns:1fr;gap:12px;padding:0 5px}
+      .wheel-result-name .wheel-stop-label{text-align:center}
+      .wheel-live-name{min-height:82px;font-size:19px;padding:12px}
+      .wheel-step-controls .secondary-button{font-size:13px}
+      .chosen-list{padding:15px 13px}
+      .chosen-picks{grid-template-columns:1fr}
+      .wheel-status{font-size:12px}
+    }
+    @media(max-width:430px){
+      .wheel-controls{padding:15px 12px}
+      .wheel-toolbar-heading h4{font-size:23px}
+      .wheel-marquee{font-size:21px}
+      .wheel-frame{max-width:100%}
+      .wheel-arcade{padding:15px 10px 17px}
+      .wheel-footnote{font-size:11px}
+    }
     @keyframes twinkle{to{opacity:1;transform:scale(1.3)}}@keyframes marquee-glint{to{filter:hue-rotate(10deg)}}
     @media(max-width:780px){.wheel-showcase{grid-template-columns:1fr;gap:18px}.wheel-arcade{padding:15px 12px 13px}.wheel-frame{max-width:390px}.wheel-controls{padding:10px 4px 5px}.wheel-controls h4{font-size:29px}.wheel-controls .filters{gap:8px}.wheel-footnote{font-size:11px}}
     @media(max-width:430px){.wheel-marquee{font-size:17px;letter-spacing:.09em}.wheel-frame{max-width:340px}.wheel-arcade{padding:14px 11px 10px}.wheel-pointer{top:-4%;width:13%}.wheel-controls .chip{padding:8px 9px;font-size:11px}.wheel-controls h4{font-size:26px}.wheel-hub{border-width:3px}.wheel-footnote{margin-top:13px}}
@@ -162,6 +224,21 @@
           <div class="voting-top"><div><h3>Siapa bintang pilihan anda?</h3><p id="welcome-name"></p></div><span class="pill">★ 3 UNDI SAHAJA</span></div>
           <div class="selection-bar" aria-live="polite"><div class="selection-label"><b id="selection-count">0 daripada 3</b>Bintang dipilih</div><div id="slot-1" class="pick-slot" aria-label="Bintang pertama">☆</div><div id="slot-2" class="pick-slot" aria-label="Bintang kedua">☆</div><div id="slot-3" class="pick-slot" aria-label="Bintang ketiga">☆</div></div>
           <div class="wheel-showcase">
+            <div class="wheel-controls">
+              <div class="wheel-toolbar-heading">
+                <div><span class="wheel-eyebrow">✧ Giliran anda memilih</span><h4>Pusing roda, <em>pilih bintang!</em></h4></div>
+                <div id="wheel-name-count" class="wheel-name-count">★ Semua nama dalam satu roda ★</div>
+              </div>
+              <div class="wheel-toolbar-fields">
+                <div class="filters" role="group" aria-label="Tapis calon">
+                  <button class="chip filter" data-filter="all" aria-pressed="true" type="button">Semua</button>
+                  <button class="chip filter" data-filter="P" aria-pressed="false" type="button">✿ Perempuan</button>
+                  <button class="chip filter" data-filter="L" aria-pressed="false" type="button">✦ Lelaki</button>
+                </div>
+                <div class="wheel-search-wrap"><label class="wheel-field-label" for="search">Cari nama calon</label><input id="search" class="field search" type="search" placeholder="Sorot nama pada roda..." autocomplete="off"></div>
+              </div>
+              <div id="search-matches" class="wheel-matches" aria-live="polite"></div>
+            </div>
             <div class="wheel-arcade">
               <div class="wheel-marquee"><span>✦</span> RODA IMPIAN <span>✦</span></div>
               <div class="wheel-frame">
@@ -171,31 +248,23 @@
                   <div class="wheel-pointer" aria-hidden="true"></div>
                 </div>
               </div>
-              <div id="wheel-name-count" class="wheel-name-count">★ Semua nama dalam satu roda ★</div>
-              <p class="wheel-footnote">✧ Seret untuk mencari nama · tiada kumpulan ✧</p>
-            </div>
-            <div class="wheel-controls">
-              <span class="wheel-eyebrow">✧ Giliran anda memilih</span>
-              <h4>Pusing sendiri, <em>pilih bintang!</em></h4>
-              <p class="wheel-intro">Semua calon berada pada roda yang sama. Pusing perlahan-lahan untuk membaca nama penuh pada penunjuk emas, kemudian berikan bintang.</p>
-              <div class="filters" role="group" aria-label="Tapis calon">
-                <button class="chip filter" data-filter="all" aria-pressed="true" type="button">Semua</button>
-                <button class="chip filter" data-filter="P" aria-pressed="false" type="button">✿ Perempuan</button>
-                <button class="chip filter" data-filter="L" aria-pressed="false" type="button">✦ Lelaki</button>
+              <p class="wheel-footnote">✧ Seret roda dengan jari atau tetikus untuk mencari nama ✧</p>
+              <div class="wheel-result-bar">
+                <div class="wheel-result-name">
+                  <div class="wheel-stop-label">★ Nama pada penunjuk emas</div>
+                  <div id="wheel-live-name" class="wheel-live-name">—</div>
+                </div>
+                <div class="wheel-result-actions">
+                  <div class="wheel-step-controls" role="group" aria-label="Pusing roda satu nama setiap kali">
+                    <button id="nudge-left" class="secondary-button" type="button">↶ Pusing kiri</button>
+                    <button id="nudge-right" class="secondary-button" type="button">Pusing kanan ↷</button>
+                  </div>
+                  <button id="choose-wheel" type="button" class="secondary-button choose-button" disabled>★ Berikan Bintang</button>
+                </div>
               </div>
-              <label class="wheel-field-label" for="search">Cari nama calon</label>
-              <input id="search" class="field search" type="search" placeholder="Sorot nama pada roda..." autocomplete="off">
-              <div id="search-matches" class="wheel-matches" aria-live="polite"></div>
-              <div class="wheel-step-controls" role="group" aria-label="Pusing roda satu nama setiap kali">
-                <button id="nudge-left" class="secondary-button" type="button">↶ Pusing kiri</button>
-                <button id="nudge-right" class="secondary-button" type="button">Pusing kanan ↷</button>
-              </div>
-              <div class="wheel-stop-label">★ Nama pada penunjuk emas</div>
-              <div id="wheel-live-name" class="wheel-live-name">—</div>
               <div id="wheel-status" class="wheel-status" role="status" aria-live="polite">Pusing roda untuk mencari calon pilihan anda.</div>
-              <button id="choose-wheel" type="button" class="secondary-button choose-button" disabled>★ Berikan Bintang</button>
-              <div class="chosen-list"><span class="wheel-field-label">Bintang yang sudah dipilih</span><div id="selected-picks" class="chosen-picks"><span class="chosen-empty">Belum ada pilihan. Tiga bintang menanti anda!</span></div></div>
             </div>
+            <div class="chosen-list"><span class="wheel-field-label">★ Bintang yang sudah dipilih</span><div id="selected-picks" class="chosen-picks"><span class="chosen-empty">Belum ada pilihan. Tiga bintang menanti anda!</span></div></div>
           </div>
           <div class="action-row"><small id="selection-hint">Putarkan roda untuk tiga calon pilihan anda.</small><button id="submit-vote" type="button" class="cta" disabled>★ Sahkan 3 Pilihan</button></div>
           <div id="vote-error" class="message" role="alert" hidden></div>

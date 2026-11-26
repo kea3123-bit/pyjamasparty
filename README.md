@@ -1,5 +1,8 @@
 > **Peraturan undian terkini (26 Nov 2026):** Setiap pengundi memilih tepat **4 calon perempuan + 1 calon lelaki** (5 calon berlainan), dihantar **sekali sahaja**. GitHub Pages menggunakan API MySQL di `https://kea3123.ddns.net/pyjamasparty-api/api.php`. API PHP mesti dideploy sebelum borang undian dibuka; laman akan menahan login jika API masih melaporkan kuota lama. Cabutan Bertuah tidak berubah.\n\n# ✦ A Night Under the Stars — Undian Bintang Malam
 
+**Portal Pentadbir (MySQL):** Papan keputusan kini mempunyai dua senarai sulit: **Sudah Mengundi** (nama pengundi, waktu undi, dan pilihan 5 calon) serta **Belum Mengundi** (nama staf dalam `PENGUNDI` tanpa undi sah). Carian boleh mencari pengundi atau calon. Fungsi API `adminVoterAudit` memerlukan token pentadbir sah dan versi `api.php` baharu pada server, tanpa perubahan SQL. Nama KP dan hash pengundi tidak dihantar ke frontend.
+
+
 Laman undian bertema langit malam untuk **Majlis Makan Malam Tahunan SMK Bandar Baru Sungai Lalang**, 26 November 2026, Dewan Al-Sufi. Antara muka sepenuhnya dalam Bahasa Melayu.
 
 ## Ciri utama

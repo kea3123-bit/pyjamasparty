@@ -1,4 +1,4 @@
-# ✦ A Night Under the Stars — Undian Bintang Malam
+> **Peraturan undian terkini (26 Nov 2026):** Setiap pengundi memilih tepat **4 calon perempuan + 1 calon lelaki** (5 calon berlainan), dihantar **sekali sahaja**. GitHub Pages menggunakan API MySQL di `https://kea3123.ddns.net/pyjamasparty-api/api.php`. API PHP mesti dideploy sebelum borang undian dibuka; laman akan menahan login jika API masih melaporkan kuota lama. Cabutan Bertuah tidak berubah.\n\n# ✦ A Night Under the Stars — Undian Bintang Malam
 
 Laman undian bertema langit malam untuk **Majlis Makan Malam Tahunan SMK Bandar Baru Sungai Lalang**, 26 November 2026, Dewan Al-Sufi. Antara muka sepenuhnya dalam Bahasa Melayu.
 
@@ -7,13 +7,13 @@ Laman undian bertema langit malam untuk **Majlis Makan Malam Tahunan SMK Bandar 
 - Animasi bintang berkelip, bintang jatuh, bulan sabit, ilustrasi bantal/selimut dan poster rasmi.
 - **Roda Impian interaktif manual:** setiap roda mengandungi semua calon aktif untuk satu jantina. Pengundi menyeret roda sendiri dengan jari atau tetikus; nama penuh pada penunjuk emas dipaparkan dalam panel khusus. Tiada kumpulan, putaran automatik atau pemilihan rawak.
 - **Susun atur berfokus pada roda:** bar kategori dan carian yang ringkas berada di atas, roda besar di tengah (hingga 770px pada desktop), manakala nama pada penunjuk emas, kawalan putaran dan butang Berikan Bintang terletak betul-betul di bawah roda.
-- **Dua roda mengikut jantina:** butang Roda Perempuan dan Roda Lelaki memisahkan semua calon mengikut jantina, tanpa pecahan kumpulan. Satu roda besar dipaparkan pada satu masa; pengundi masih mempunyai tiga undian keseluruhan untuk calon daripada mana-mana roda.
+- **Dua roda mengikut jantina:** butang Roda Perempuan dan Roda Lelaki memisahkan semua calon mengikut jantina, tanpa pecahan kumpulan. Satu roda besar dipaparkan pada satu masa; pengundi masih mempunyai lima undian keseluruhan (4 calon perempuan + 1 calon lelaki) untuk calon daripada mana-mana roda.
 - **Singkatan nama boleh diubah di Google Sheets:** setiap sektor roda memaparkan singkatan daripada lajur E (`SINGKATAN`) tab `CALON`; nama penuh tetap ditunjukkan di bawah roda dan pada pengesahan undian.
 - Pengundi hanya perlu memasukkan **nombor kad pengenalan 12 digit**; pengesahan dibuat menggunakan senarai guru dan AKP pada pelayan.
-- Setiap pengundi memilih **tepat 3 calon berbeza**, dan **hanya satu penghantaran undi** dibenarkan.
+- Setiap pengundi memilih **tepat 5 calon berbeza (4 perempuan, 1 lelaki)**, dan **hanya satu penghantaran undi** dibenarkan.
 - Papan keputusan **hanya untuk pentadbir** dan menunjukkan 7 calon perempuan serta 3 calon lelaki teratas.
 - Pentadbir boleh buka atau tutup undian; undian dikunci secara transaksi supaya tidak berganda.
-- Pangkalan data merekodkan hanya hash pengundi bersalt, tiga ID calon, masa dan status; **tiada nombor KP atau telefon disimpan** dalam helaian undian.
+- Pangkalan data merekodkan hanya hash pengundi bersalt, lima ID calon, masa dan status; **tiada nombor KP atau telefon disimpan** dalam helaian undian.
 
 ## Dua Google Sheets
 
@@ -28,7 +28,7 @@ Lajur sumber Sheet1: BIL, NAMA, NOKP, JAWATAN, NO TELEFON. Semakan awal: **69 ba
 
 ## Seni bina yang betul
 
-**Seluruh UI berada di GitHub Pages.** Calon, animasi, pengesahan pengundi, tiga pilihan, paparan selesai dan leaderboard admin semuanya beroperasi pada halaman [https://kea3123-bit.github.io/pyjamasparty/](https://kea3123-bit.github.io/pyjamasparty/).
+**Seluruh UI berada di GitHub Pages.** Calon, animasi, pengesahan pengundi, lima pilihan mengikut kuota jantina, paparan selesai dan leaderboard admin semuanya beroperasi pada halaman [https://kea3123-bit.github.io/pyjamasparty/](https://kea3123-bit.github.io/pyjamasparty/).
 
 Google Apps Script hanyalah **backend sambungan Google Sheets**. Ia menyediakan fail Bridge.html (komponen kecil tanpa UI) dan Code.gs (fungsi server). GitHub Pages berkomunikasi dengan Bridge.html dalam iframe tersembunyi melalui mesej yang disahkan menggunakan origin GitHub dan token saluran rawak. Google Apps Script menggunakan google.script.run untuk membaca/menulis ke Sheets. Nombor KP tidak dimasukkan ke dalam query URL.
 

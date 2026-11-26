@@ -185,6 +185,12 @@
     @media(max-width:780px){.wheel-showcase{grid-template-columns:1fr;gap:18px}.wheel-arcade{padding:15px 12px 13px}.wheel-frame{max-width:390px}.wheel-controls{padding:10px 4px 5px}.wheel-controls h4{font-size:29px}.wheel-controls .filters{gap:8px}.wheel-footnote{font-size:11px}}
     @media(max-width:430px){.wheel-marquee{font-size:17px;letter-spacing:.09em}.wheel-frame{max-width:340px}.wheel-arcade{padding:14px 11px 10px}.wheel-pointer{top:-4%;width:13%}.wheel-controls .chip{padding:8px 9px;font-size:11px}.wheel-controls h4{font-size:26px}.wheel-hub{border-width:3px}.wheel-footnote{margin-top:13px}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.001ms!important;transition:none!important;scroll-behavior:auto!important}}
+    .quota-progress{display:block;color:#ffe5a5;font-size:11px;font-weight:700;margin-top:5px}
+    @media(max-width:550px){
+      .selection-bar{flex-wrap:wrap;justify-content:center}
+      .selection-bar .selection-label{flex-basis:100%;text-align:center;margin-right:0}
+      .selection-bar .pick-slot{width:42px;height:42px}
+    }
   </style>
 </head>
 <body>
@@ -229,8 +235,8 @@
           <div id="login-error" class="message" role="alert" hidden></div>
         </div>
         <div id="vote-stage" class="glass voting-panel" hidden>
-          <div class="voting-top"><div><h3>Siapa bintang pilihan anda?</h3><p id="welcome-name"></p></div><span class="pill">★ 3 UNDI SAHAJA</span></div>
-          <div class="selection-bar" aria-live="polite"><div class="selection-label"><b id="selection-count">0 daripada 3</b>Bintang dipilih</div><div id="slot-1" class="pick-slot" aria-label="Bintang pertama">☆</div><div id="slot-2" class="pick-slot" aria-label="Bintang kedua">☆</div><div id="slot-3" class="pick-slot" aria-label="Bintang ketiga">☆</div></div>
+          <div class="voting-top"><div><h3>Siapa bintang pilihan anda?</h3><p id="welcome-name"></p></div><span class="pill">★ 4 PEREMPUAN + 1 LELAKI</span></div>
+          <div class="selection-bar" aria-live="polite"><div class="selection-label"><b id="selection-count">0 daripada 5</b><small id="quota-progress" class="quota-progress">Perempuan 0/4 · Lelaki 0/1</small></div><div id="slot-1" class="pick-slot" aria-label="Bintang pertama">☆</div><div id="slot-2" class="pick-slot" aria-label="Bintang kedua">☆</div><div id="slot-3" class="pick-slot" aria-label="Bintang ketiga">☆</div><div id="slot-4" class="pick-slot" aria-label="Bintang keempat">☆</div><div id="slot-5" class="pick-slot" aria-label="Bintang kelima">☆</div></div>
           <div class="wheel-showcase">
             <div class="wheel-controls">
               <div class="wheel-toolbar-heading">
@@ -255,7 +261,7 @@
                   <div class="wheel-pointer" aria-hidden="true"></div>
                 </div>
               </div>
-              <p class="wheel-footnote">✧ Dua roda berasingan · tiga undian keseluruhan · nama penuh pada penunjuk ✧</p>
+              <p class="wheel-footnote">✧ Empat calon perempuan · satu calon lelaki · nama penuh pada penunjuk ✧</p>
               <div class="wheel-result-bar">
                 <div class="wheel-result-name">
                   <div class="wheel-stop-label">★ Nama pada penunjuk emas</div>
@@ -271,14 +277,14 @@
               </div>
               <div id="wheel-status" class="wheel-status" role="status" aria-live="polite">Pusing roda untuk mencari calon pilihan anda.</div>
             </div>
-            <div class="chosen-list"><span class="wheel-field-label">★ Bintang yang sudah dipilih</span><div id="selected-picks" class="chosen-picks"><span class="chosen-empty">Belum ada pilihan. Tiga bintang menanti anda!</span></div></div>
+            <div class="chosen-list"><span class="wheel-field-label">★ Bintang yang sudah dipilih</span><div id="selected-picks" class="chosen-picks"><span class="chosen-empty">Belum ada pilihan. Pilih empat perempuan dan seorang lelaki!</span></div></div>
           </div>
-          <div class="action-row"><small id="selection-hint">Putarkan roda untuk tiga calon pilihan anda.</small><button id="submit-vote" type="button" class="cta" disabled>★ Sahkan 3 Pilihan</button></div>
+          <div class="action-row"><small id="selection-hint">Putarkan roda untuk 4 calon perempuan dan 1 calon lelaki.</small><button id="submit-vote" type="button" class="cta" disabled>★ Sahkan 5 Pilihan</button></div>
           <div id="vote-error" class="message" role="alert" hidden></div>
         </div>
         <div id="success-stage" class="glass success-view" hidden>
           <span class="trophy" aria-hidden="true">🌟</span><span class="script-note">A little magic, a lot of memories.</span>
-          <h2>Tiga bintang anda telah bersinar!</h2><p id="success-text">Terima kasih kerana memeriahkan malam istimewa ini. Undian anda telah direkodkan dengan selamat. Jumpa di malam gala!</p>
+          <h2>Lima bintang anda telah bersinar!</h2><p id="success-text">Terima kasih kerana memeriahkan malam istimewa ini. Undian anda telah direkodkan dengan selamat. Jumpa di malam gala!</p>
           <span class="pill">✓ UNDIAN SELESAI</span>
         </div>
         <div id="closed-stage" class="glass success-view" hidden>
@@ -291,7 +297,7 @@
   </div>
 
   <div id="confirm-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title" hidden>
-    <div class="modal-card"><button class="close" type="button" data-close="confirm-modal" aria-label="Tutup">×</button><span class="eyebrow">Sahkan pilihan</span><h2 id="confirm-title">Tiga bintang pilihan anda</h2><p>Pastikan pilihan anda betul. Undian yang dihantar <strong>tidak boleh diubah.</strong></p><ol id="confirm-list" class="confirm-list"></ol><button id="vote-final" class="cta" type="button">★ Ya, Hantar Undian</button><button type="button" class="secondary-button" style="width:100%;margin-top:9px" data-close="confirm-modal">Semak semula</button></div>
+    <div class="modal-card"><button class="close" type="button" data-close="confirm-modal" aria-label="Tutup">×</button><span class="eyebrow">Sahkan pilihan</span><h2 id="confirm-title">Lima bintang pilihan anda</h2><p>Pastikan pilihan anda betul. Undian yang dihantar <strong>tidak boleh diubah.</strong></p><ol id="confirm-list" class="confirm-list"></ol><button id="vote-final" class="cta" type="button">★ Ya, Hantar Undian</button><button type="button" class="secondary-button" style="width:100%;margin-top:9px" data-close="confirm-modal">Semak semula</button></div>
   </div>
   <div id="poster-modal" class="modal" role="dialog" aria-modal="true" aria-label="Poster rasmi makan malam" hidden>
     <div class="modal-card poster-modal"><button class="close" type="button" data-close="poster-modal" aria-label="Tutup">×</button><img class="poster-image" src="https://raw.githubusercontent.com/kea3123-bit/pyjamasparty/main/assets/poster-web.jpg" alt="Poster rasmi A Night Under the Stars, Majlis Makan Malam SMK Bandar Baru Sungai Lalang pada 26 November 2026" loading="lazy"></div>
@@ -336,7 +342,7 @@
       }
       return payload.result;
     }
-    const state = { candidates:[],selection:[],filter:'P',query:'',wheelEntries:[],wheelRotation:0,wheelRotations:{P:0,L:0},wheelSpinning:false,wheelWinner:null,voterToken:null,adminToken:null,config:{maxVotes:3,femaleWinners:7,maleWinners:3,open:true},pending:false };
+    const state = { candidates:[],selection:[],filter:'P',query:'',wheelEntries:[],wheelRotation:0,wheelRotations:{P:0,L:0},wheelSpinning:false,wheelWinner:null,voterToken:null,adminToken:null,config:{maxVotes:5,femaleVotes:4,maleVotes:1,femaleWinners:7,maleWinners:3,open:true},pending:false };
     const escapeHtml = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     function error(id,msg){$(id).textContent=msg||'';$(id).hidden=!msg}
     function stage(name){['login','vote','success','closed'].forEach(x=>$(x+'-stage').hidden=x!==name)}
@@ -363,6 +369,21 @@
     }
     function matchesWheelSearch(c){
       return c.name.toLocaleLowerCase('ms').includes(state.query)||wheelShortName(c).toLocaleLowerCase('ms').includes(state.query);
+    }
+    function genderCount(gender){
+      return state.selection.reduce((count,id)=>{
+        const candidate=state.candidates.find(c=>c.id===id);
+        return count+(candidate?.gender===gender?1:0);
+      },0);
+    }
+    function remainingGender(gender){
+      const allowed=gender==='P'?state.config.femaleVotes:state.config.maleVotes;
+      return Math.max(0,allowed-genderCount(gender));
+    }
+    function quotaComplete(){
+      return state.selection.length===state.config.maxVotes &&
+        genderCount('P')===state.config.femaleVotes &&
+        genderCount('L')===state.config.maleVotes;
     }
     function drawWheel(){
       const canvas=$('vote-wheel'),ctx=canvas.getContext('2d');
@@ -415,19 +436,23 @@
       name.classList.toggle('already-chosen',Boolean(c&&state.selection.includes(c.id)));
     }
     function updateWheelStatus(){
-      const atLimit=state.selection.length>=state.config.maxVotes;
+      const atLimit=quotaComplete();
       const busy=state.wheelSpinning||state.pending;
       const alreadyChosen=Boolean(state.wheelWinner&&state.selection.includes(state.wheelWinner.id));
+      const genderFull=remainingGender(state.filter)===0;
       $('submit-vote').disabled=!atLimit||busy;
-      $('choose-wheel').disabled=!state.wheelWinner||alreadyChosen||atLimit||busy;
+      $('choose-wheel').disabled=!state.wheelWinner||alreadyChosen||atLimit||genderFull||busy;
       $('nudge-left').disabled=atLimit||busy||!state.wheelEntries.length;
       $('nudge-right').disabled=atLimit||busy||!state.wheelEntries.length;
       $('search').disabled=atLimit||busy;
       document.querySelectorAll('.filter').forEach(b=>b.disabled=atLimit||busy);
       document.querySelectorAll('.chosen-pick button').forEach(b=>b.disabled=busy);
       const status=$('wheel-status');status.classList.toggle('winner',Boolean(state.wheelWinner)&&!busy);
-      if(atLimit)status.textContent='🌟 Tiga bintang lengkap! Tekan “Sahkan 3 Pilihan” untuk menghantar undian.';
+      if(atLimit)status.textContent='🌟 Lima bintang lengkap: 4 perempuan dan 1 lelaki. Sahkan undian anda.';
       else if(busy)status.textContent='✦ Pusing perlahan-lahan. Nama penuh akan berubah mengikut penunjuk emas.';
+      else if(genderFull)status.textContent=state.filter==='P'?
+        '✿ Kuota 4 calon perempuan sudah penuh. Tukar ke Roda Lelaki.':
+        '✦ Kuota 1 calon lelaki sudah penuh. Tukar ke Roda Perempuan.';
       else if(alreadyChosen)status.textContent='Bintang sudah diberikan kepada calon ini. Pusing lagi untuk memilih orang lain.';
       else if(state.wheelWinner)status.textContent='★ '+state.wheelWinner.name+' — tekan “Berikan Bintang” untuk memilih calon ini.';
       else if(state.query&&!wheelPool().some(matchesWheelSearch))status.textContent='Nama tidak ditemui pada roda ini. Cuba ejaan lain atau tukar roda.';
@@ -437,20 +462,23 @@
     function renderCandidates(preserveRotation=false){
       const chosen=$('selected-picks');chosen.textContent='';
       if(!state.selection.length){
-        const empty=document.createElement('span');empty.className='chosen-empty';empty.textContent='Belum ada pilihan. Tiga bintang menanti anda!';chosen.append(empty);
+        const empty=document.createElement('span');empty.className='chosen-empty';empty.textContent='Belum ada pilihan. Pilih empat perempuan dan seorang lelaki!';chosen.append(empty);
       }
       state.selection.forEach((id,i)=>{
         const c=state.candidates.find(x=>x.id===id);
         if(!c)return;
         const item=document.createElement('div');item.className='chosen-pick';
-        const name=document.createElement('span');name.textContent=(i+1)+'. ★ '+c.name;
+        const name=document.createElement('span');name.textContent=(i+1)+'. ★ '+c.name+' ('+(c.gender==='P'?'Perempuan':'Lelaki')+')';
         const remove=document.createElement('button');remove.type='button';remove.textContent='×';remove.setAttribute('aria-label','Buang pilihan '+c.name);
         remove.addEventListener('click',()=>pick(id));item.append(name,remove);chosen.append(item);
       });
       $('selection-count').textContent=state.selection.length+' daripada '+state.config.maxVotes;
-      for(let i=1;i<=3;i++){const slot=$('slot-'+i);slot.textContent=i<=state.selection.length?'★':'☆';slot.classList.toggle('filled',i<=state.selection.length)}
-      const atLimit=state.selection.length>=state.config.maxVotes;
-      $('selection-hint').textContent=atLimit?'Ketiga-tiga bintang sudah dipilih. Sahkan undian anda.':'Pusing roda untuk '+(state.config.maxVotes-state.selection.length)+' lagi calon pilihan anda.';
+      $('quota-progress').textContent='Perempuan '+genderCount('P')+'/'+state.config.femaleVotes+' · Lelaki '+genderCount('L')+'/'+state.config.maleVotes;
+      for(let i=1;i<=state.config.maxVotes;i++){const slot=$('slot-'+i);slot.textContent=i<=state.selection.length?'★':'☆';slot.classList.toggle('filled',i<=state.selection.length)}
+      const atLimit=quotaComplete();
+      $('selection-hint').textContent=atLimit?
+        'Empat calon perempuan dan seorang lelaki telah dipilih. Sahkan undian anda.':
+        'Baki '+remainingGender('P')+' perempuan dan '+remainingGender('L')+' lelaki.';
       const pool=wheelPool();
       state.wheelEntries=pool;
       const genderName=state.filter==='P'?'Perempuan':'Lelaki';
@@ -486,8 +514,20 @@
       if(state.pending||state.wheelSpinning)return;
       const index=state.selection.indexOf(id);
       if(index>=0)state.selection.splice(index,1);
-      else if(state.selection.length<state.config.maxVotes)state.selection.push(id);
-      else{error('vote-error','Anda hanya boleh memilih tiga orang calon. Buang satu pilihan dahulu.');return}
+      else {
+        const candidate=state.candidates.find(c=>c.id===id);
+        if(!candidate)return;
+        if(remainingGender(candidate.gender)===0){
+          error('vote-error',candidate.gender==='P'?
+            'Had empat calon perempuan sudah dipenuhi. Sila pilih calon lelaki.':
+            'Had seorang calon lelaki sudah dipenuhi. Sila pilih calon perempuan.');
+          return;
+        }
+        if(state.selection.length>=state.config.maxVotes){
+          error('vote-error','Anda hanya boleh memilih 4 perempuan dan 1 lelaki.');return;
+        }
+        state.selection.push(id);
+      }
       state.query='';$('search').value='';
       error('vote-error','');renderCandidates();
     }
@@ -583,9 +623,9 @@
       }catch(err){error('login-error',err.message||'Pengesahan gagal. Sila cuba lagi.')}
       finally{state.pending=false;$('login-button').disabled=false}
     });
-    $('submit-vote').addEventListener('click',()=>{if(state.selection.length!==3)return;const list=$('confirm-list');list.textContent='';state.selection.forEach((id,i)=>{const c=state.candidates.find(x=>x.id===id),li=document.createElement('li');li.textContent=(i+1)+'. ★ '+(c?c.name:id);list.append(li)});showModal('confirm-modal')});
+    $('submit-vote').addEventListener('click',()=>{if(!quotaComplete())return;const list=$('confirm-list');list.textContent='';state.selection.forEach((id,i)=>{const c=state.candidates.find(x=>x.id===id),li=document.createElement('li');li.textContent=(i+1)+'. ★ '+(c?c.name:id);list.append(li)});showModal('confirm-modal')});
     $('vote-final').addEventListener('click',async()=>{
-      if(state.pending||state.selection.length!==3)return;
+      if(state.pending||!quotaComplete())return;
       state.pending=true;$('vote-final').disabled=true;error('vote-error','');
       try{
         const r=await server('castVote',state.voterToken,state.selection.slice());if(!r.ok)throw new Error(r.message||'Undian gagal');
@@ -635,8 +675,18 @@
         const r=await server('getPublicData');
         state.candidates=Array.isArray(r.candidates)?r.candidates:[];
         if(!state.candidates.length)throw new Error('Tiada calon ditemui. Semak akses senarai nama dan tab CALON dalam database.');
-        state.config={...state.config,maxVotes:r.maxVotes||3,femaleWinners:r.femaleWinners||7,maleWinners:r.maleWinners||3,open:r.open!==false};
-        $('bridge-status').hidden=true;$('login-button').disabled=false;$('admin-trigger').disabled=false;
+        state.config={...state.config,femaleWinners:r.femaleWinners||7,maleWinners:r.maleWinners||3,open:r.open!==false};
+        const readyQuota=Number(r.maxVotes)===5&&Number(r.femaleVotes)===4&&Number(r.maleVotes)===1;
+        $('admin-trigger').disabled=false;
+        if(!readyQuota){
+          $('bridge-status').hidden=false;
+          $('bridge-status').textContent='⚠ API MySQL belum dikemas kini kepada 4 undian perempuan + 1 undian lelaki. Pengundian dikunci sementara supaya tiada undian format lama direkodkan.';
+          $('login-button').disabled=true;
+          renderCandidates();
+          return;
+        }
+        $('bridge-status').hidden=true;
+        $('login-button').disabled=false;
         if(!state.config.open)stage('closed');
         renderCandidates();
       }catch(err){

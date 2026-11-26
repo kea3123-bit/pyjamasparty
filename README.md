@@ -1,5 +1,8 @@
 > **Peraturan undian terkini (26 Nov 2026):** Setiap pengundi memilih tepat **4 calon perempuan + 1 calon lelaki** (5 calon berlainan), dihantar **sekali sahaja**. GitHub Pages menggunakan API MySQL di `https://kea3123.ddns.net/pyjamasparty-api/api.php`. API PHP mesti dideploy sebelum borang undian dibuka; laman akan menahan login jika API masih melaporkan kuota lama. Cabutan Bertuah tidak berubah.\n\n# ✦ A Night Under the Stars — Undian Bintang Malam
 
+**Reset Undian (MySQL admin, 26 Nov 2026):** Portal Pentadbir kini menyediakan butang **Reset Undian**, hanya aktif selepas undian **ditutup** dan backend melaporkan `resetAvailable: true`. Pentadbir mesti menaip `RESET` dan masukkan semula kata laluan. API PHP baharu menjalankan `adminResetVotes`: arkib semua baris `UNDI` ke `UNDI_ARKIB` (dibina secara automatik jika belum ada), kemudian mengosongkan `UNDI` dan sesi pengundi lama dalam satu transaksi. **Tidak memadam** `PENGUNDI`, `CALON`, `TETAPAN` atau sejarah arkib. Undian kekal ditutup selepas reset sehingga dibuka semula oleh pentadbir. Perlu upload `api.php` terkini ke `pyjamasparty-api/` pada server berasingan; tiada perubahan pada Cabutan Bertuah.
+
+
 **Portal Pentadbir (MySQL):** Papan keputusan kini mempunyai dua senarai sulit: **Sudah Mengundi** (nama pengundi, waktu undi, dan pilihan 5 calon) serta **Belum Mengundi** (nama staf dalam `PENGUNDI` tanpa undi sah). Carian boleh mencari pengundi atau calon. Fungsi API `adminVoterAudit` memerlukan token pentadbir sah dan versi `api.php` baharu pada server, tanpa perubahan SQL. Nama KP dan hash pengundi tidak dihantar ke frontend.
 
 

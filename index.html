@@ -222,6 +222,10 @@
       .audit-table td:first-child{min-width:120px}
       .audit-table .audit-choice-list{min-width:205px}
     }
+    .reset-submit{display:block;width:100%;margin-top:22px;border:1px solid #eeb1b1;background:#712e40;color:#fff0f0;font-size:15px;padding:13px}
+    .reset-submit:not(:disabled):hover{background:#8e344a}
+    .reset-submit:disabled{opacity:.5;cursor:not-allowed}
+    #reset-votes-modal strong{color:#fff0bc}
   </style>
 </head>
 <body>
@@ -368,9 +372,27 @@
         </section>
         <div class="results-columns"><div class="result-box"><h3>✿ 7 Bintang Perempuan</h3><div id="female-results"></div></div><div class="result-box"><h3>✦ 3 Bintang Lelaki</h3><div id="male-results"></div></div></div>
         <details class="result-full"><summary>Lihat kedudukan semua calon</summary><table><thead><tr><th>Nama</th><th>Kategori</th><th>Undian</th></tr></thead><tbody id="all-results"></tbody></table></details>
-        <div class="admin-actions"><span id="voting-state" class="pill"></span><button id="refresh-results" class="secondary-button" type="button">Muat semula</button><button id="toggle-voting" class="secondary-button danger" type="button">Tutup undian</button><button id="admin-logout" class="secondary-button" type="button">Log keluar</button></div>
+        <div class="admin-actions"><span id="voting-state" class="pill"></span><button id="refresh-results" class="secondary-button" type="button">Muat semula</button><button id="toggle-voting" class="secondary-button danger" type="button">Tutup undian</button><button id="reset-votes-trigger" class="secondary-button danger" type="button" disabled>↺ Reset Undian</button><button id="admin-logout" class="secondary-button" type="button">Log keluar</button></div>
       </div>
       <div id="admin-error" class="message" role="alert" hidden></div>
+    </div>
+  </div>
+  <div id="reset-votes-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="reset-votes-title" hidden>
+    <div class="modal-card">
+      <button class="close" type="button" data-close="reset-votes-modal" aria-label="Tutup">×</button>
+      <span class="eyebrow">Pengesahan pentadbir</span>
+      <h2 id="reset-votes-title">↺ Reset Semua Undian</h2>
+      <p><strong>Ini akan mengosongkan undian aktif, jumlah bintang dan senarai sudah mengundi.</strong> Semua warga sekolah boleh mengundi sekali lagi apabila undian dibuka semula.</p>
+      <p>Rekod lama akan <strong>disandarkan ke UNDI_ARKIB</strong> dahulu. Senarai calon dan pengundi tidak dipadam. Undian mesti ditutup sebelum reset.</p>
+      <form id="reset-votes-form" autocomplete="off">
+        <label class="label" for="reset-confirm-text">Taip perkataan RESET</label>
+        <input id="reset-confirm-text" type="text" class="field" placeholder="RESET" required spellcheck="false" autocapitalize="characters" autocomplete="off">
+        <label class="label" for="reset-admin-password">Sahkan kata laluan pentadbir</label>
+        <input id="reset-admin-password" type="password" class="field" autocomplete="off" required placeholder="Kata laluan pentadbir">
+        <button id="reset-votes-submit" class="secondary-button danger reset-submit" type="submit">Ya, Reset Semua Undian</button>
+        <button class="secondary-button" data-close="reset-votes-modal" type="button" style="width:100%;margin-top:8px">Batalkan</button>
+      </form>
+      <div id="reset-votes-error" class="message" role="alert" hidden></div>
     </div>
   </div>
   <script>
@@ -785,6 +807,11 @@
         $('audit-message').textContent='Laporan terperinci belum tersedia. Muat naik api.php baharu ke folder pyjamasparty-api pada server. '+String(auditResult.cause?.message||'');
       }
       renderVoterAudit();
+      const resetSupported=r.resetAvailable===true;
+      $('reset-votes-trigger').disabled=r.open||!resetSupported;
+      $('reset-votes-trigger').title=!resetSupported?
+        'Sila kemas kini api.php pada server supaya Reset Undian tersedia.':
+        r.open?'Tutup undian dahulu sebelum reset.':'Reset semua rekod undian selepas sandaran.';
       $('voting-state').textContent=r.open?'● Undian dibuka':'● Undian ditutup';
       $('toggle-voting').textContent=r.open?'Tutup undian':'Buka semula undian';$('toggle-voting').classList.toggle('danger',r.open);state.config.open=r.open;
     }
@@ -794,6 +821,35 @@
       if(!window.confirm(opening?'Buka semula undian sekarang?':'Tutup undian sekarang? Pengundi baharu tidak dapat menghantar undi.'))return;
       try{await server('adminSetVotingOpen',state.adminToken,opening);await loadAdmin();if(!opening)stage('closed')}
       catch(err){error('admin-error',err.message)}
+    });
+    $('reset-votes-trigger').addEventListener('click',()=>{
+      if(!state.adminToken||$('reset-votes-trigger').disabled)return;
+      $('reset-votes-form').reset();
+      error('reset-votes-error','');
+      showModal('reset-votes-modal');
+    });
+    $('reset-votes-form').addEventListener('submit',async e=>{
+      e.preventDefault();
+      if(!state.adminToken)return;
+      const confirmation=$('reset-confirm-text').value.trim();
+      if(confirmation!=='RESET'){
+        error('reset-votes-error','Taip RESET tepat seperti yang diminta.');return;
+      }
+      const password=$('reset-admin-password').value;
+      if(!password){error('reset-votes-error','Masukkan kata laluan pentadbir.');return}
+      const send=$('reset-votes-submit');
+      send.disabled=true;error('reset-votes-error','');
+      try{
+        const result=await server('adminResetVotes',state.adminToken,password,confirmation);
+        $('reset-admin-password').value='';
+        closeModal('reset-votes-modal');
+        adminAudit=null;
+        $('audit-search').value='';
+        renderVoterAudit();
+        try{await loadAdmin()}catch(refreshErr){error('admin-error','Reset berjaya tetapi laporan tidak dapat dimuatkan semula: '+refreshErr.message)}
+        window.alert('Reset selesai. '+Number(result.cleared||0)+' rekod undian aktif sudah disandarkan dan dikosongkan. Undian masih ditutup; buka semula apabila bersedia.');
+      }catch(err){error('reset-votes-error',err.message||'Reset gagal. Tiada undian dipadam.')}
+      finally{send.disabled=false}
     });
     $('admin-logout').addEventListener('click',async()=>{try{if(state.adminToken)await server('adminLogout',state.adminToken)}catch(_e){}state.adminToken=null;adminAudit=null;$('audit-search').value='';$('audit-rows').replaceChildren();renderVoterAudit();$('admin-login').hidden=false;$('admin-content').hidden=true;closeModal('admin-modal')});
     function confetti(){if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;for(let i=0;i<85;i++){const item=document.createElement('i');item.className='confetti';item.style.cssText='--left:'+Math.random()*100+'vw;--dur:'+(3+Math.random()*3)+'s;--rot:'+Math.random()*180+'deg;--shift:'+(Math.random()-.5)*220+'px;--color:'+['#ffdd7e','#ffc7e6','#b9a8fc','#fff4c7'][i%4]+';animation-delay:'+Math.random()*.9+'s';document.body.append(item);setTimeout(()=>item.remove(),7000)}}

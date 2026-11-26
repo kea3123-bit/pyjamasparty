@@ -6,50 +6,32 @@
 </style></head><body><canvas id="sky" aria-hidden="true"></canvas><main class="shell">
 <header><div class="brand"><b>☾</b> SMK BANDAR BARU SUNGAI LALANG</div><nav><a href="./" class="soft">← Undian Bintang Malam</a><button id="fullscreen" type="button" class="soft">⛶ Skrin penuh</button></nav></header>
 <div class="intro"><div class="eyebrow">✦ A Night Under the Stars · Pyjamas Party ✦</div><h1>Cabutan Bertuah</h1><p>Satu putaran, satu bintang bertuah. Siapakah yang akan membawa pulang hadiah?</p></div>
-<div class="layout"><section class="panel stage" aria-label="Roda Cabutan Bertuah"><div class="counter"><span class="pill" id="remaining">Memuatkan peserta…</span><span class="pill" id="draw-count">0 cabutan</span></div><div class="wheel-frame" id="frame"><div class="disc" id="disc"><canvas id="draw-wheel" width="1400" height="1400" role="img" aria-label="Roda semua peserta lelaki dan perempuan"></canvas></div><div class="hub" aria-hidden="true">★</div><div class="pointer" aria-hidden="true"></div></div><button id="spin" class="spin" type="button" disabled>★ PUTARKAN RODA</button><p id="status" class="status" role="status">Sedang mendapatkan senarai peserta daripada Google Sheets…</p></section>
+<div class="layout"><section class="panel stage" aria-label="Roda Cabutan Bertuah"><div class="counter"><span class="pill" id="remaining">Memuatkan peserta…</span><span class="pill" id="draw-count">0 cabutan</span></div><div class="wheel-frame" id="frame"><div class="disc" id="disc"><canvas id="draw-wheel" width="1400" height="1400" role="img" aria-label="Roda semua peserta lelaki dan perempuan"></canvas></div><div class="hub" aria-hidden="true">★</div><div class="pointer" aria-hidden="true"></div></div><button id="spin" class="spin" type="button" disabled>★ PUTARKAN RODA</button><p id="status" class="status" role="status">Sedang mendapatkan senarai peserta daripada MySQL…</p></section>
 <aside class="panel history"><h2>✦ Pemenang bertuah</h2><p id="history-note">Pemenang dikeluarkan daripada roda selepas cabutan. Sejarah disimpan dalam pelayar ini.</p><ol id="history"></ol><label><input type="checkbox" id="repeat"> Benarkan pemenang berulang</label><div class="tools"><button id="reload" class="soft" type="button">Muat semula nama</button><button id="reset" type="button" class="soft" disabled>Set semula</button></div></aside></div><footer>26 November 2026 · Dewan Al-Sufi · Cabutan bertuah berasingan daripada undian bintang.</footer></main>
 <div class="modal" id="winner-modal" role="dialog" aria-modal="true" aria-labelledby="winner-name" hidden><div class="winner"><div class="eyebrow" id="winner-number">CABUTAN BERTUAH</div><div class="trophy" aria-hidden="true">🏆</div><div class="headline">Tahniah kepada…</div><h2 id="winner-name"></h2><p>Anda ialah bintang bertuah malam ini!</p><button class="spin" type="button" id="continue">Cabutan Seterusnya ✦</button></div></div>
 <script>
 (()=>{'use strict';
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwsfZkaneRyH58UNPqX3RS-igyyItIxbKDvLxigKMlvP6S8j6kgMqPTpxp7wbtze_g5nA/exec';
-    const CHANNEL = Array.from(crypto.getRandomValues(new Uint8Array(16)),x=>x.toString(16).padStart(2,'0')).join('');
-    let bridgeSource,bridgeOrigin,nextRequestId=0;
-    const pending=new Map();
-    const bridgeReady=new Promise((resolve,reject)=>{
-      const timeout=setTimeout(()=>reject(new Error('Sambungan Apps Script tidak memberi respons. Semak deployment Web App dan kebenaran akses.')),20000);
-      window.addEventListener('message',event=>{
-        const data=event.data;
-        if(!data||data.channel!==CHANNEL||typeof data.kind!=='string')return;
-        if(data.kind==='BRIDGE_READY'){
-          if(!event.source||(!/^https:\/\/(?:script\.google\.com|(?:[a-z0-9-]+\.)?googleusercontent\.com)$/.test(event.origin)&&event.origin!=='null'))return;
-          bridgeSource=event.source;bridgeOrigin=event.origin;
-          clearTimeout(timeout);resolve();return;
-        }
-        if(data.kind==='BRIDGE_RESULT'&&event.source===bridgeSource&&event.origin===bridgeOrigin){
-          const task=pending.get(data.id);if(!task)return;
-          clearTimeout(task.timeout);pending.delete(data.id);
-          if(data.ok)task.resolve(data.result);
-          else task.reject(new Error(data.error||'Ralat pada pangkalan data.'));
-        }
-      });
-      const frame=document.createElement('iframe'),url=new URL(APPS_SCRIPT_URL);
-      url.searchParams.set('channel',CHANNEL);
-      frame.src=url.href;frame.title='Sambungan selamat ke Google Sheets';
-      frame.referrerPolicy='no-referrer';
-      frame.setAttribute('aria-hidden','true');frame.tabIndex=-1;
-      frame.style.cssText='position:absolute;left:-9999px;top:0;width:1px;height:1px;opacity:0;border:0;pointer-events:none';
-      document.body.append(frame);
-    });
+const MYSQL_API_URL = 'https://kea3123.ddns.net/pyjamasparty-api/api.php';
     const $ = id => document.getElementById(id);
-function server(fn,...args){
-      return bridgeReady.then(()=>new Promise((resolve,reject)=>{
-        const id=++nextRequestId;
-        const timeout=setTimeout(()=>{pending.delete(id);reject(new Error('Permintaan mengambil masa terlalu lama. Cuba sekali lagi.'))},30000);
-        pending.set(id,{resolve,reject,timeout});
-        bridgeSource.postMessage({kind:'BRIDGE_REQUEST',channel:CHANNEL,id,method:fn,args},bridgeOrigin==='null'?'*':bridgeOrigin);
-      }));
+    async function server(fn,...args){
+      let response;
+      try{
+        response=await fetch(MYSQL_API_URL,{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({method:fn,args}),
+          mode:'cors',cache:'no-store',credentials:'omit'
+        });
+      }catch(_){
+        throw new Error('Tidak dapat menghubungi API MySQL. Semak sambungan internet dan kea3123.ddns.net.');
+      }
+      const payload=await response.json().catch(()=>null);
+      if(!response.ok||!payload||payload.ok!==true){
+        throw new Error((payload&&payload.error)||'Permintaan ke pangkalan data MySQL gagal.');
+      }
+      return payload.result;
     }
-function wheelShortName(c){
+    function wheelShortName(c){
       const saved=String(c.shortName||'').trim();
       if(saved)return saved;
       // Fallback when the Apps Script deployment predates CALON!E.
